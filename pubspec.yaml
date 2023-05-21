@@ -7,7 +7,20 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
-  get: 4.6.5
+  get: ^4.6.5
+  intl:
+  shared_preferences:
+  firebase_auth:
+  firebase_core:
+  flutter_form_builder:
+  form_builder_validators:
+  flutter_local_notifications:
+  flutter_native_splash:
+  flutter_svg:
+  flutter_slidable:
+  cached_network_image:
+  carousel_slider:
+  # Test device package
   device_preview: ^1.1.0
   flutter:
     sdk: flutter
