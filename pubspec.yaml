@@ -8,6 +8,9 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
+  get_storage: ^2.1.1
+  carousel_slider: ^4.2.1
+  http:
   intl:
   shared_preferences:
   firebase_auth:
@@ -19,9 +22,10 @@ dependencies:
   flutter_svg:
   flutter_slidable:
   cached_network_image:
-  carousel_slider:
   # Test device package
   device_preview: ^1.1.0
+  #
+  zoom_tap_animation: ^1.1.0
   flutter:
     sdk: flutter
 
