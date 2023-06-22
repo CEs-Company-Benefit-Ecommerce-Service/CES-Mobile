@@ -170,7 +170,7 @@ class HomeView extends GetView<HomeController> {
                               ]),
                           // decoration: BoxDecoration(),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 12),
                         Container(
                           // width: Get.width,
                           height: 160,
@@ -179,10 +179,9 @@ class HomeView extends GetView<HomeController> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.grey,
                               image: const DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/placeholder.jpg"),
+                                  image: AssetImage("assets/images/logo.png"),
                                   fit: BoxFit.cover)),
-                          child: const Text("Banner here"),
+                          // child: const Text("Banner here"),
                         ),
                         const SizedBox(height: 24),
                       ])),
@@ -253,7 +252,7 @@ class HomeView extends GetView<HomeController> {
                           ),
                   )),
 
-              Container(height: 8, color: Colors.grey.shade200),
+              SizedBox(height: 8),
 
               Obx(() => controller.isLoading.value
                   ? Container()
@@ -270,18 +269,30 @@ class HomeView extends GetView<HomeController> {
                                     : null,
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
+                                    color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(e.name ?? "Wallet name"),
                                     const SizedBox(height: 4),
-                                    Text(
-                                      e.balance.toString(),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          e.balance.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Icon(
+                                          e != controller.walletList?.last
+                                              ? Icons.wallet_rounded
+                                              : Icons.wallet_giftcard_rounded,
+                                          color: const Color(0xff243763),
+                                        )
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -294,7 +305,7 @@ class HomeView extends GetView<HomeController> {
               // const SizedBox(
               //   height: 24,
               // ),
-              Container(height: 8, color: Colors.grey.shade200),
+              const SizedBox(height: 8),
 
               Obx(
                 () => controller.isLoading.value
@@ -302,7 +313,8 @@ class HomeView extends GetView<HomeController> {
                         child: CircularProgressIndicator(),
                       )
                     : Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

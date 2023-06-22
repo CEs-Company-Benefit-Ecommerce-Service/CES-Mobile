@@ -25,7 +25,6 @@ class CartView extends GetView<CartController> {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 80,
-        elevation: 1,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
