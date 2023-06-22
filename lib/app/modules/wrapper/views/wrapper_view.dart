@@ -9,46 +9,40 @@ class WrapperView extends GetView<WrapperController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Obx(() => AnimatedContainer(
-            duration: const Duration(milliseconds: 800),
+      bottomNavigationBar: Obx(
+        () => AnimatedContainer(
+          duration: const Duration(milliseconds: 400),
+          height: controller.showBottomBar.value ? 70 : 0,
+          child: SingleChildScrollView(
             child: BottomAppBar(
-              height: controller.showBottomBar.value ? 70 : 0,
+              // height: controller.showBottomBar.value ? 70 : 0,
               elevation: 0,
               notchMargin: 15,
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-                child: Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _bottomAppBarItem(
-                        icon: Icons.home,
-                        page: 0,
-                        context,
-                        label: "Home",
-                      ),
-                      _bottomAppBarItem(
-                          icon: Icons.history,
-                          page: 1,
-                          context,
-                          label: "Order"),
-                      _bottomAppBarItem(
-                          icon: Icons.wallet,
-                          page: 2,
-                          context,
-                          label: "Wallet"),
-                      _bottomAppBarItem(
-                          icon: Icons.person,
-                          page: 3,
-                          context,
-                          label: "Profile"),
-                    ],
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _bottomAppBarItem(
+                      icon: Icons.home,
+                      page: 0,
+                      context,
+                      label: "Home",
+                    ),
+                    _bottomAppBarItem(
+                        icon: Icons.history, page: 1, context, label: "Order"),
+                    _bottomAppBarItem(
+                        icon: Icons.wallet, page: 2, context, label: "Wallet"),
+                    _bottomAppBarItem(
+                        icon: Icons.person, page: 3, context, label: "Profile"),
+                  ],
                 ),
               ),
             ),
-          )),
+          ),
+        ),
+      ),
       body: PageView(
         controller: controller.pageController,
         physics: const NeverScrollableScrollPhysics(),

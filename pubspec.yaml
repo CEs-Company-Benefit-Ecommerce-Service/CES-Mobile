@@ -12,19 +12,19 @@ dependencies:
   carousel_slider: ^4.2.1
   http:
   intl:
-  shared_preferences:
-  firebase_auth:
-  firebase_core:
   flutter_form_builder:
   form_builder_validators:
-  flutter_local_notifications:
-  flutter_native_splash:
-  flutter_svg:
-  flutter_slidable:
-  cached_network_image:
+  # flutter_native_splash:
+  # flutter_svg:
+  # cached_network_image:
+
+  # flutter_local_notifications:
+  # shared_preferences:
+  # firebase_auth:
+  # firebase_core:
+  # flutter_slidable:
   # Test device package
   device_preview: ^1.1.0
-  #
   zoom_tap_animation: ^1.1.0
   flutter:
     sdk: flutter

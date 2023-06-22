@@ -25,7 +25,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
               children: [
                 Container(
                   height: Get.height / 3,
-                  color: Color(0xff243763),
+                  color: const Color(0xff243763),
                   alignment: Alignment.center,
                   child: Center(
                     child: Image.asset(
@@ -101,14 +101,14 @@ class AuthenticationView extends GetView<AuthenticationController> {
                             ? null
                             : () => controller.login(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff243763),
+                          backgroundColor: const Color(0xff243763),
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                         child: controller.isLoading.value
-                            ? SizedBox(
+                            ? const SizedBox(
                                 width: 24,
                                 height: 24,
                                 child: CircularProgressIndicator(
@@ -116,7 +116,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
                                   strokeWidth: 3,
                                 ),
                               )
-                            : Text('Login'),
+                            : const Text('Login'),
                       )),
                 ),
               ],

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ces_app/app/core/utils/extension/app_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,196 +19,248 @@ class HomeView extends GetView<HomeController> {
       'assets/icons/food.png',
       'assets/icons/ramen.png',
       'assets/icons/snack.png',
-      // Add more asset paths here as needed
     ];
 
     return Scaffold(
+      // backgroundColor: Colors.grey.shade200,
+      floatingActionButton: Obx(() => Visibility(
+            visible: controller.cartProducts.isNotEmpty,
+            child: Stack(
+              children: [
+                FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  onPressed: () {
+                    controller.navigateToCart();
+                  },
+                  mini: true,
+                  shape: const RoundedRectangleBorder(),
+                  child: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Color(0xff243763),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 5,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      controller.cartProducts
+                          .fold(0, (sum, item) => sum + (item['count'] as int))
+                          .toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
       bottomNavigationBar: Obx(() => InkWell(
             onTap: () => controller.navigateToCart(),
-            child: Container(
-              // color: Colors.red,
+            child: SizedBox(
               height: controller.cartProducts.isNotEmpty ? 50 : 0,
-              // padding: EdgeInsets.all(16),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.shopping_bag_outlined),
-                          SizedBox(width: 2),
-                          Text(
-                            controller.cartProducts
-                                .fold(0,
-                                    (sum, item) => sum + item['count'] as int)
-                                .toString(),
-                            style: TextStyle(color: Colors.red, fontSize: 16),
-                          ),
+                          Stack(children: [
+                            const Icon(Icons.shopping_bag_outlined),
+                            Positioned(
+                              top: -5,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Builder(builder: (context) {
+                                  final itemCount = controller.cartProducts
+                                      .fold(
+                                          0,
+                                          (sum, item) =>
+                                              sum + (item['count'] as int));
+                                  return Text(
+                                    itemCount.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ]),
                         ],
                       ),
                     ),
-                    Container(
-                        padding: EdgeInsets.all(16),
-                        alignment: Alignment.center,
-                        color: Colors.red,
-                        width: Get.width / 3,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      alignment: Alignment.center,
+                      color: Colors.red,
+                      child: InkWell(
+                        onTap: () => controller.navigateToCart(),
                         child: const Text(
                           "Checkout",
                           style: TextStyle(color: Colors.white),
-                        ))
-                  ]),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )),
       body: SafeArea(
         child: SingleChildScrollView(
           controller: wrapperController.scrollController,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            // color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 8),
-                Text("Deliver To:"),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                    ),
-                    Text("Company A - D1 SHTP")
-                  ],
-                ),
-                SizedBox(height: 8),
-                Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.grey.shade300,
-                  ),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.search, color: Colors.grey.shade600),
-                        SizedBox(
-                          width: 8,
+                        const SizedBox(height: 8),
+                        const Text("Deliver To:"),
+                        const Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                            ),
+                            Text("Company A - D1 SHTP")
+                          ],
                         ),
-                        Text(
-                          "Search ...",
-                          style: TextStyle(color: Colors.grey.shade600),
-                        )
-                      ]),
-                  // decoration: BoxDecoration(),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  width: Get.width,
-                  height: 160,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey,
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/placeholder.jpg"),
-                          fit: BoxFit.cover)),
-                  child: Text("Banner here"),
-                ),
-                // CarouselSlider(
-                //   options: CarouselOptions(
-                //     height: 160,
-                //     enableInfiniteScroll: true,
-                //   ),
-                //   items: [1, 2, 3].map((i) {
-                //     return Builder(
-                //       builder: (BuildContext context) {
-                //         return Container(
-                //             width: MediaQuery.of(context).size.width,
-                //             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                //             decoration: const BoxDecoration(color: Colors.grey),
-                //             child: Center(
-                //               child: Text(
-                //                 'text $i',
-                //                 style: TextStyle(fontSize: 16.0),
-                //               ),
-                //             ));
-                //       },
-                //     );
-                //   }).toList(),
-                // ),
-                SizedBox(
-                  height: 24,
-                ),
-                Container(
-                    height: 88,
-                    child: Obx(
-                      () => controller.isLoading.value
-                          ? Container()
-                          : ListView(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.grey.shade300,
+                          ),
+                          child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                // ...(controller.categoryList ?? []).map((item) {
-                                //       return Padding(
-                                //         padding: const EdgeInsets.symmetric(
-                                //             horizontal: 16),
-                                //         child: Column(
-                                //           children: [
-                                //             Container(
-                                //               width: 48,
-                                //               height: 48,
-                                //               decoration: BoxDecoration(
-                                //                   shape: BoxShape.circle,
-                                //                   image: DecorationImage(
-                                //                       image: AssetImage(
-                                //                           'assets/icons/food.png'),
-                                //                       fit: BoxFit.cover)),
-                                //             ),
-                                //             SizedBox(height: 4),
-                                //             Text(item.name ?? "no name")
-                                //           ],
-                                //         ),
-                                //       );
-                                //     }).toList(),
-                                ...(controller.categoryList ?? [])
-                                    .asMap()
-                                    .entries
-                                    .map((entry) {
-                                  final index = entry.key % assetList.length;
-                                  final assetPath = assetList[index];
-                                  final item = entry.value;
+                                Icon(Icons.search, color: Colors.grey.shade600),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Search ...",
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                )
+                              ]),
+                          // decoration: BoxDecoration(),
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          // width: Get.width,
+                          height: 160,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey,
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/placeholder.jpg"),
+                                  fit: BoxFit.cover)),
+                          child: const Text("Banner here"),
+                        ),
+                        const SizedBox(height: 24),
+                      ])),
 
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 48,
-                                          height: 48,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: AssetImage(assetPath),
-                                              fit: BoxFit.cover,
-                                            ),
+              // CarouselSlider(
+              //   options: CarouselOptions(
+              //     height: 160,
+              //     enableInfiniteScroll: true,
+              //   ),
+              //   items: [1, 2, 3].map((i) {
+              //     return Builder(
+              //       builder: (BuildContext context) {
+              //         return Container(
+              //             width: MediaQuery.of(context).size.width,
+              //             margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              //             decoration: const BoxDecoration(color: Colors.grey),
+              //             child: Center(
+              //               child: Text(
+              //                 'text $i',
+              //                 style: TextStyle(fontSize: 16.0),
+              //               ),
+              //             ));
+              //       },
+              //     );
+              //   }).toList(),
+              // ),
+
+              SizedBox(
+                  height: 88,
+                  child: Obx(
+                    () => controller.isLoading.value
+                        ? Container()
+                        : ListView(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            children: [
+                              ...(controller.categoryList ?? [])
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                final index = entry.key % assetList.length;
+                                final assetPath = assetList[index];
+                                final item = entry.value;
+
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 48,
+                                        height: 48,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: AssetImage(assetPath),
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                        SizedBox(height: 4),
-                                        Text(item.name ?? "no name"),
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ],
-                            ),
-                    )),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(item.name ?? "no name"),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ],
+                          ),
+                  )),
 
-                Obx(() => controller.isLoading.value
-                    ? Container()
-                    : Row(
+              Container(height: 8, color: Colors.grey.shade200),
+
+              Obx(() => controller.isLoading.value
+                  ? Container()
+                  : Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      child: Row(
                         children: [
                           ...(controller.walletList ?? []).map((e) {
                             return Expanded(
@@ -229,7 +279,7 @@ class HomeView extends GetView<HomeController> {
                                     const SizedBox(height: 4),
                                     Text(
                                       e.balance.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ],
@@ -238,18 +288,30 @@ class HomeView extends GetView<HomeController> {
                             );
                           }).toList(),
                         ],
-                      )),
+                      ),
+                    )),
 
-                SizedBox(
-                  height: 24,
-                ),
-                Obx(
-                  () => controller.isLoading.value
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Column(
-                          children: controller.productList?.map((item) {
+              // const SizedBox(
+              //   height: 24,
+              // ),
+              Container(height: 8, color: Colors.grey.shade200),
+
+              Obx(
+                () => controller.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Buy now",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16)),
+                              const SizedBox(height: 4),
+                              ...(controller.productList ?? []).map((item) {
                                 var isAddedToCartItem = controller.cartProducts
                                         .firstWhereOrNull((element) =>
                                             element['id'] == item.id) !=
@@ -276,8 +338,9 @@ class HomeView extends GetView<HomeController> {
                                                           ? NetworkImage(
                                                               item.imageUrl!,
                                                             )
-                                                          : NetworkImage(
-                                                              'https://firebasestorage.googleapis.com/v0/b/my-storage-ces.appspot.com/o/image%2Fdownload%20(1).jpeg3f6d38b0-1fe3-4bce-954c-036a442b4599?alt=media&token=f93f418f-75d0-4a97-9761-cbe49c4d176d'))),
+                                                          : Image.asset(
+                                                                  "assets/images/placeholder.jpg")
+                                                              .image)),
                                             ),
                                           ),
                                           const SizedBox(width: 16),
@@ -289,7 +352,7 @@ class HomeView extends GetView<HomeController> {
                                               children: [
                                                 Text(
                                                   item.name!.toCapitalized(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     height: 1.6,
                                                     fontSize: 16,
                                                     color: Colors.black,
@@ -311,7 +374,7 @@ class HomeView extends GetView<HomeController> {
                                                     children: [
                                                       Text(
                                                         "${item.price} đ",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             height: 1.6,
                                                             fontWeight:
                                                                 FontWeight
@@ -326,7 +389,7 @@ class HomeView extends GetView<HomeController> {
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(4),
-                                                                    color: Color(
+                                                                    color: const Color(
                                                                         0xff243763),
                                                                   ),
                                                                   child: InkWell(
@@ -334,7 +397,7 @@ class HomeView extends GetView<HomeController> {
                                                                         controller
                                                                             .decrease(item);
                                                                       },
-                                                                      child: Icon(
+                                                                      child: const Icon(
                                                                         Icons
                                                                             .remove,
                                                                         color: Colors
@@ -344,10 +407,10 @@ class HomeView extends GetView<HomeController> {
                                                                       )),
                                                                 ),
                                                                 Container(
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
-                                                                          horizontal:
-                                                                              8),
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          8),
                                                                   child: Text(controller.cartProducts.firstWhereOrNull((element) =>
                                                                               element['id'] ==
                                                                               item
@@ -367,7 +430,7 @@ class HomeView extends GetView<HomeController> {
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(4),
-                                                                    color: Color(
+                                                                    color: const Color(
                                                                         0xff243763),
                                                                   ),
                                                                   child: InkWell(
@@ -375,7 +438,7 @@ class HomeView extends GetView<HomeController> {
                                                                         controller
                                                                             .addToCart(item);
                                                                       },
-                                                                      child: Icon(
+                                                                      child: const Icon(
                                                                         Icons
                                                                             .add,
                                                                         color: Colors
@@ -393,7 +456,7 @@ class HomeView extends GetView<HomeController> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             4),
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xff243763),
                                                               ),
                                                               child: InkWell(
@@ -402,7 +465,8 @@ class HomeView extends GetView<HomeController> {
                                                                         .addToCart(
                                                                             item);
                                                                   },
-                                                                  child: Icon(
+                                                                  child:
+                                                                      const Icon(
                                                                     Icons.add,
                                                                     color: Colors
                                                                         .white,
@@ -420,11 +484,11 @@ class HomeView extends GetView<HomeController> {
                                     const Divider()
                                   ],
                                 );
-                              }).toList() ??
-                              []),
-                )
-              ],
-            ),
+                              }).toList()
+                            ]),
+                      ),
+              )
+            ],
           ),
         ),
       ),
