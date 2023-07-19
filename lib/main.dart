@@ -9,12 +9,13 @@ import 'generated/locales.g.dart';
 void main() async {
   await GetStorage.init();
   runApp(
-      //
-      //     DevicePreview(
-      //   enabled: true,
-      //   builder: (context) => const MyApp(),
-      // )
-      const MyApp());
+    //
+    //     DevicePreview(
+    //   enabled: true,
+    //   builder: (context) => const MyApp(),
+    // )
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {

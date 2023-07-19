@@ -1,15 +1,27 @@
+import 'dart:convert';
+
+import 'package:ces_app/app/models/user_model.dart';
+import 'package:ces_app/app/modules/home/controllers/home_controller.dart';
 import 'package:ces_app/app/modules/home/views/home_view.dart';
+import 'package:ces_app/app/modules/order/controllers/order_controller.dart';
 import 'package:ces_app/app/modules/order/views/order_view.dart';
 import 'package:ces_app/app/modules/profile/views/profile_view.dart';
+import 'package:ces_app/app/modules/wallet/controllers/wallet_controller.dart';
 import 'package:ces_app/app/modules/wallet/views/wallet_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 
 class WrapperController extends GetxController {
   late PageController pageController;
   ScrollController scrollController = ScrollController();
   var showBottomBar = true.obs;
+  // UserModel? user;
+  var user = UserModel().obs;
+  final box = GetStorage();
 
   RxInt currentPage = 0.obs;
 
@@ -21,6 +33,19 @@ class WrapperController extends GetxController {
   ];
 
   void goToTab(int page) {
+    if (page == 0) {
+      var homeController = Get.find<HomeController>();
+      homeController.fetchData();
+    } else if (page == 1) {
+      var orderController = Get.find<OrderController>();
+      orderController.fetchData();
+    } else if (page == 2) {
+      var walletController = Get.find<WalletController>();
+      walletController.fetchData();
+    } else if (page == 3) {
+      // var profileController = Get.find<ProfileController>();
+      // profileController.fetchData();
+    }
     currentPage.value = page;
     pageController.jumpToPage(page);
   }
@@ -33,6 +58,8 @@ class WrapperController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
+    fetchUser();
     scrollController.addListener(() {
       if (scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -42,12 +69,37 @@ class WrapperController extends GetxController {
       }
     });
     pageController = PageController(initialPage: 0);
-    super.onInit();
+  }
+
+  fetchUser() async {
+    try {
+      String token = box.read("token");
+
+      http.Response response = await http
+          .get(Uri.tryParse('https://api-dev.ces.bio/api/login/me')!, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+
+        user.value = UserModel.fromJson(result);
+      } else {
+        if (kDebugMode) {
+          print('error fetching data + ${response.body}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error while getting data is $e');
+      }
+    } finally {}
   }
 
   @override
   void dispose() {
-    pageController.dispose();
     super.dispose();
+    pageController.dispose();
   }
 }

@@ -11,12 +11,12 @@ class WrapperView extends GetView<WrapperController> {
     return Scaffold(
       bottomNavigationBar: Obx(
         () => AnimatedContainer(
-          duration: const Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 300),
           height: controller.showBottomBar.value ? 70 : 0,
           child: SingleChildScrollView(
             child: BottomAppBar(
               // height: controller.showBottomBar.value ? 70 : 0,
-              elevation: 0,
+              // elevation: 0,
               notchMargin: 15,
               child: Container(
                 padding:
