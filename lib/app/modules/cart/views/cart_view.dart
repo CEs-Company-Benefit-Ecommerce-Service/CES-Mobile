@@ -49,7 +49,7 @@ class CartView extends GetView<CartController> {
                   flex: 2,
                   child: SizedBox(
                       height: 40,
-                      child: ElevatedButton(
+                      child: Obx(() => ElevatedButton(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
                                   Colors.white),
@@ -60,9 +60,20 @@ class CartView extends GetView<CartController> {
                                   RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ))),
-                          onPressed: () =>
-                              controller.order(homeController.cartProducts),
-                          child: const Text("Order")))),
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () =>
+                                  controller.order(homeController.cartProducts),
+                          child: controller.isLoading.value
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 3,
+                                  ),
+                                )
+                              : const Text("Order"))))),
             ]),
           ],
         ),

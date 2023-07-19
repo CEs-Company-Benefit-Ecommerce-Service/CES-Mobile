@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:ces_app/app/core/utils/print.dart';
 import 'package:ces_app/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -25,28 +24,25 @@ class CartController extends GetxController {
     try {
       isLoading(true);
       http.Response response =
-          await http.post(Uri.tryParse('https://api-dev.ces.bio/api/orderss')!,
+          await http.post(Uri.tryParse('https://api-dev.ces.bio/api/order')!,
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': 'Bearer $token',
               },
               body: jsonEncode(orderList));
 
-      Printt.cyan(response);
-
-      homeController.clearCart();
-      Get.offAllNamed('/wrapper');
-
-      // if (response.statusCode == 200) {
-      //   var result = jsonDecode(response.body);
-      //   // loginModel = LoginModel.fromJson(result['data']);
-
-      //   // Get.offAllNamed('/wrapper');
-      // } else {
-      //   if (kDebugMode) {
-      //     print('error fetching data');
-      //   }
-      // }
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+        if (kDebugMode) {
+          print("result: + $result");
+        }
+        homeController.clearCart();
+        Get.offAllNamed('/wrapper');
+      } else {
+        if (kDebugMode) {
+          print('error order + ${response.body}');
+        }
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Error while posting data is $e');
