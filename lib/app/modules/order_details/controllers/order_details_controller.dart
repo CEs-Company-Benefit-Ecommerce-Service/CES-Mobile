@@ -1,19 +1,18 @@
 import 'dart:convert';
 
 import 'package:ces_app/app/models/order_model.dart';
-import 'package:ces_app/app/routes/app_pages.dart';
+import 'package:ces_app/app/modules/order/controllers/order_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-class OrderController extends GetxController {
+class OrderDetailsController extends GetxController {
   var isLoading = false.obs;
-  List<OrderModel>? orderList;
+  final OrderController orderController = Get.find<OrderController>();
+  OrderModel? currentOrderDetails;
   final box = GetStorage();
   String? token;
-  String? currentOrderId;
-
   @override
   void onInit() {
     super.onInit();
@@ -24,16 +23,15 @@ class OrderController extends GetxController {
   fetchData() async {
     isLoading(true);
     final futures = <Future>[];
-    futures.add(fetchOrder());
+    futures.add(fetchOrderById(orderController.currentOrderId!));
     await Future.wait(futures);
     isLoading(false);
   }
 
-  fetchOrder() async {
+  fetchOrderById(String id) async {
     try {
       http.Response response = await http.get(
-          Uri.tryParse(
-              'https://api-dev.ces.bio/api/order?Sort=CreatedAt&Order=desc')!,
+          Uri.tryParse('https://api-dev.ces.bio/api/order/$id')!,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -41,12 +39,12 @@ class OrderController extends GetxController {
           });
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        List data = result['data'];
-
-        orderList = data.map((e) => OrderModel.fromJson(e)).toList();
+        print(result.toString());
+        currentOrderDetails = OrderModel.fromJson(result['data']);
+        print(currentOrderDetails?.toJson());
       } else {
         if (kDebugMode) {
-          print('error fetching data order controller + ${response.body}');
+          print('error fetching data + ${response.body}');
         }
       }
     } catch (e) {
@@ -55,12 +53,6 @@ class OrderController extends GetxController {
       }
     } finally {}
   }
-
-  void navigateToDetails(id) {
-    currentOrderId = id;
-    Get.toNamed(Routes.ORDER_DETAILS);
-  }
-
   // @override
   // void onReady() {
   //   super.onReady();
