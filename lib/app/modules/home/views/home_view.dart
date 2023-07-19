@@ -1,6 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ces_app/app/core/utils/extension/app_extension.dart';
+import 'package:ces_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../wrapper/controllers/wrapper_controller.dart';
 import '../controllers/home_controller.dart';
@@ -22,7 +25,50 @@ class HomeView extends GetView<HomeController> {
     ];
 
     return Scaffold(
-      // backgroundColor: Colors.grey.shade200,
+      appBar: AppBar(
+        toolbarHeight: 60,
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        title: Row(
+          children: [
+            Flexible(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.grey.shade200,
+                ),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search, color: Colors.grey.shade500),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Search ...",
+                        style: TextStyle(
+                            color: Colors.grey.shade500, fontSize: 14),
+                      )
+                    ]),
+              ),
+            ),
+            const SizedBox(width: 16),
+            InkWell(
+              onTap: () {
+                Get.toNamed(Routes.PROFILE);
+              },
+              child: const CircleAvatar(
+                radius: 18,
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                child: Icon(Icons.person),
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: Obx(() => Visibility(
             visible: controller.cartProducts.isNotEmpty,
             child: Stack(
@@ -62,161 +108,53 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           )),
-      bottomNavigationBar: Obx(() => InkWell(
-            onTap: () => controller.navigateToCart(),
-            child: SizedBox(
-              height: controller.cartProducts.isNotEmpty ? 50 : 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Stack(children: [
-                            const Icon(Icons.shopping_bag_outlined),
-                            Positioned(
-                              top: -5,
-                              right: 0,
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Builder(builder: (context) {
-                                  final itemCount = controller.cartProducts
-                                      .fold(
-                                          0,
-                                          (sum, item) =>
-                                              sum + (item['count'] as int));
-                                  return Text(
-                                    itemCount.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
-                                  );
-                                }),
-                              ),
-                            ),
-                          ]),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      color: Colors.red,
-                      child: InkWell(
-                        onTap: () => controller.navigateToCart(),
-                        child: const Text(
-                          "Checkout",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )),
       body: SafeArea(
         child: SingleChildScrollView(
           controller: wrapperController.scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        const Text("Deliver To:"),
-                        const Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.red,
+              const SizedBox(height: 16),
+              CarouselSlider(
+                options: CarouselOptions(
+                  // height: 160,
+                  aspectRatio: 2 / 1,
+                  viewportFraction: 0.9,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enableInfiniteScroll: true,
+                ),
+                items: [1, 2, 3].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                          decoration: BoxDecoration(
+                              color: i == 1
+                                  ? Colors.blue
+                                  : i == 2
+                                      ? Colors.red
+                                      : Colors.green,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Center(
+                            child: Text(
+                              'Banner $i',
+                              style: const TextStyle(fontSize: 16.0),
                             ),
-                            Text("Company A - D1 SHTP")
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.grey.shade300,
-                          ),
+                          ));
+                    },
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 24),
+              Obx(() => controller.isLoading.value
+                      ? Container()
+                      : SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
                           child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(Icons.search, color: Colors.grey.shade600),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "Search ...",
-                                  style: TextStyle(color: Colors.grey.shade600),
-                                )
-                              ]),
-                          // decoration: BoxDecoration(),
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          // width: Get.width,
-                          height: 160,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey,
-                              image: const DecorationImage(
-                                  image: AssetImage("assets/images/logo.png"),
-                                  fit: BoxFit.cover)),
-                          // child: const Text("Banner here"),
-                        ),
-                        const SizedBox(height: 24),
-                      ])),
-
-              // CarouselSlider(
-              //   options: CarouselOptions(
-              //     height: 160,
-              //     enableInfiniteScroll: true,
-              //   ),
-              //   items: [1, 2, 3].map((i) {
-              //     return Builder(
-              //       builder: (BuildContext context) {
-              //         return Container(
-              //             width: MediaQuery.of(context).size.width,
-              //             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              //             decoration: const BoxDecoration(color: Colors.grey),
-              //             child: Center(
-              //               child: Text(
-              //                 'text $i',
-              //                 style: TextStyle(fontSize: 16.0),
-              //               ),
-              //             ));
-              //       },
-              //     );
-              //   }).toList(),
-              // ),
-
-              SizedBox(
-                  height: 88,
-                  child: Obx(
-                    () => controller.isLoading.value
-                        ? Container()
-                        : ListView(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ...(controller.categoryList ?? [])
                                   .asMap()
@@ -226,8 +164,9 @@ class HomeView extends GetView<HomeController> {
                                 final assetPath = assetList[index];
                                 final item = entry.value;
 
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                return Container(
+                                  width: 64,
+                                  margin: const EdgeInsets.symmetric(
                                       horizontal: 16),
                                   child: Column(
                                     children: [
@@ -242,79 +181,64 @@ class HomeView extends GetView<HomeController> {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 4),
-                                      Text(item.name ?? "no name"),
+                                      const SizedBox(height: 8),
+                                      Text(item.name!),
                                     ],
                                   ),
                                 );
-                              }).toList(),
+                              }),
                             ],
                           ),
-                  )),
+                        )
+                  // : Flexible(
+                  //     child: ListView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       // shrinkWrap: true,
+                  //       children: [
+                  //         ...(controller.categoryList ?? [])
+                  //             .asMap()
+                  //             .entries
+                  //             .map((entry) {
+                  //           final index = entry.key % assetList.length;
+                  //           final assetPath = assetList[index];
+                  //           final item = entry.value;
 
-              SizedBox(height: 8),
-
-              Obx(() => controller.isLoading.value
-                  ? Container()
-                  : Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
-                      child: Row(
-                        children: [
-                          ...(controller.walletList ?? []).map((e) {
-                            return Expanded(
-                              child: Container(
-                                margin: e != controller.walletList?.last
-                                    ? const EdgeInsets.only(right: 8)
-                                    : null,
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(e.name ?? "Wallet name"),
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          e.balance.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        Icon(
-                                          e != controller.walletList?.last
-                                              ? Icons.wallet_rounded
-                                              : Icons.wallet_giftcard_rounded,
-                                          color: const Color(0xff243763),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ],
-                      ),
-                    )),
-
-              // const SizedBox(
-              //   height: 24,
-              // ),
-              const SizedBox(height: 8),
-
+                  //           return Container(
+                  //             alignment: Alignment.center,
+                  //             width: 60,
+                  //             margin:
+                  //                 const EdgeInsets.symmetric(horizontal: 16),
+                  //             child: Column(
+                  //               children: [
+                  //                 Container(
+                  //                   width: 48,
+                  //                   height: 48,
+                  //                   decoration: BoxDecoration(
+                  //                     shape: BoxShape.circle,
+                  //                     image: DecorationImage(
+                  //                       image: AssetImage(assetPath),
+                  //                       fit: BoxFit.cover,
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 const SizedBox(height: 4),
+                  //                 Flexible(child: Text(item.name!)),
+                  //               ],
+                  //             ),
+                  //           );
+                  //         }),
+                  //       ],
+                  //     ),
+                  //   ),
+                  ),
+              const SizedBox(height: 24),
               Obx(
                 () => controller.isLoading.value
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -322,7 +246,7 @@ class HomeView extends GetView<HomeController> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16)),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 8),
                               ...(controller.productList ?? []).map((item) {
                                 var isAddedToCartItem = controller.cartProducts
                                         .firstWhereOrNull((element) =>
@@ -385,7 +309,7 @@ class HomeView extends GetView<HomeController> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        "${item.price} đ",
+                                                        "${NumberFormat.decimalPattern().format(item.price)} đ",
                                                         style: const TextStyle(
                                                             height: 1.6,
                                                             fontWeight:
@@ -496,10 +420,11 @@ class HomeView extends GetView<HomeController> {
                                     const Divider()
                                   ],
                                 );
-                              }).toList()
+                              })
                             ]),
                       ),
-              )
+              ),
+              const SizedBox(height: 24),
             ],
           ),
         ),

@@ -14,7 +14,7 @@ class HomeController extends GetxController {
   List<CategoryModel>? categoryList;
   List<WalletModel>? walletList;
   final box = GetStorage();
-
+  String? token;
   // Add to cart
   var isAddedToCart = false.obs;
   var selectedProduct = {};
@@ -72,6 +72,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    token = box.read("token");
 
     fetchData();
   }
@@ -91,7 +92,6 @@ class HomeController extends GetxController {
   }
 
   fetchProduct() async {
-    String? token = box.read("token");
     try {
       http.Response response = await http
           .get(Uri.tryParse('https://api-dev.ces.bio/api/product')!, headers: {
@@ -106,7 +106,7 @@ class HomeController extends GetxController {
         productList = data.map((e) => ProductModel.fromJson(e)).toList();
       } else {
         if (kDebugMode) {
-          print('error fetching data');
+          print('error fetching data + ${response.body}');
         }
       }
     } catch (e) {
@@ -117,9 +117,6 @@ class HomeController extends GetxController {
   }
 
   fetchCategory() async {
-    String? token = box.read("token");
-
-    print(box.read("accountId"));
     try {
       http.Response response = await http
           .get(Uri.tryParse('https://api-dev.ces.bio/api/category')!, headers: {
@@ -134,7 +131,7 @@ class HomeController extends GetxController {
         categoryList = data.map((e) => CategoryModel.fromJson(e)).toList();
       } else {
         if (kDebugMode) {
-          print('error fetching data');
+          print('error fetching data + ${response.body}');
         }
       }
     } catch (e) {
@@ -145,8 +142,8 @@ class HomeController extends GetxController {
   }
 
   fetchWallet() async {
-    String? token = box.read("token");
     String? accountId = box.read("accountId");
+
     try {
       http.Response response = await http.get(
           Uri.tryParse(
@@ -163,7 +160,7 @@ class HomeController extends GetxController {
         walletList = data.map((e) => WalletModel.fromJson(e)).toList();
       } else {
         if (kDebugMode) {
-          print('error fetching data');
+          print('error fetching data + ${response.body}');
         }
       }
     } catch (e) {

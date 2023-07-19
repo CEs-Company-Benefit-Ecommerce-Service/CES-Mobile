@@ -11,6 +11,10 @@ abstract class Routes {
   static const AUTHENTICATION = _Paths.AUTHENTICATION;
   static const SPLASH = _Paths.SPLASH;
   static const CART = _Paths.CART;
+  static const ORDER_DETAILS = _Paths.ORDER_DETAILS;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const MANAGE_ACCOUNT = _Paths.MANAGE_ACCOUNT;
+  static const EDIT_PASSWORD = _Paths.EDIT_PASSWORD;
 }
 
 abstract class _Paths {
@@ -23,4 +27,8 @@ abstract class _Paths {
   static const AUTHENTICATION = '/authentication';
   static const SPLASH = '/splash';
   static const CART = '/cart';
+  static const ORDER_DETAILS = '/order-details';
+  static const EDIT_PROFILE = '/edit-profile';
+  static const MANAGE_ACCOUNT = '/manage-account';
+  static const EDIT_PASSWORD = '/edit-password';
 }
