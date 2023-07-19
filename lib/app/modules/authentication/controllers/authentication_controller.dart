@@ -36,7 +36,9 @@ class AuthenticationController extends GetxController {
           Get.offNamed('/wrapper');
         } else {
           if (kDebugMode) {
-            print('error fetching data');
+            print(
+              'login api + ${response.body}',
+            );
           }
         }
       } catch (e) {
@@ -44,7 +46,7 @@ class AuthenticationController extends GetxController {
           print('Error while getting data is $e');
         }
       } finally {
-        // isLoading(false);
+        isLoading(false);
         // Get.delete<AuthenticationController>();
       }
     }
