@@ -55,10 +55,10 @@ class AuthenticationView extends GetView<AuthenticationController> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: FormBuilderTextField(
                     name: 'email',
-                    initialValue: "employee86@gmail.com",
+                    initialValue: "employee11@gmail.com",
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
-                      // FormBuilderValidators.email(),
+                      FormBuilderValidators.email(),
                     ]),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade200,
