@@ -1,3 +1,4 @@
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,14 +19,15 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
           'Order Details',
           style: TextStyle(color: Colors.black),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_horiz_rounded),
-            onPressed: () {},
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.more_horiz_rounded),
+        //     onPressed: () {},
+        //   )
+        // ],
       ),
-      body: Obx(() => controller.isLoading.value
+      body: Obx(() => controller.isLoading.value &&
+              controller.currentOrderDetails == null
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -35,6 +37,121 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 16),
+                  Container(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsetsDirectional.symmetric(
+                        vertical: 16, horizontal: 8),
+                    child: EasyStepper(
+                      activeStep: controller.activeStep,
+                      lineLength: 64,
+                      lineSpace: 0,
+                      disableScroll: true,
+                      lineType: LineType.normal,
+                      defaultLineColor: Colors.grey.shade400,
+                      finishedLineColor: Colors.red,
+                      finishedStepBackgroundColor: Colors.grey.shade500,
+                      finishedStepTextColor: Colors.grey.shade400,
+                      internalPadding: 24,
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          vertical: 32, horizontal: 24),
+                      showLoadingAnimation: false,
+                      stepRadius: 8,
+                      showStepBorder: false,
+                      lineThickness: 0.5,
+                      steps: [
+                        EasyStep(
+                          customStep: CircleAvatar(
+                            radius: 8,
+                            backgroundColor: controller.activeStep >= 0
+                                ? Colors.red
+                                : Colors.grey.shade400,
+                          ),
+                          enabled: false,
+                          customTitle: Text(
+                            'Pending',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              height: 2,
+                              fontWeight: controller.activeStep == 0
+                                  ? FontWeight.w500
+                                  : FontWeight.normal,
+                              color: controller.activeStep == 0
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
+                          ),
+                        ),
+                        EasyStep(
+                          customStep: CircleAvatar(
+                            radius: 8,
+                            backgroundColor: controller.activeStep >= 1
+                                ? Colors.red
+                                : Colors.grey.shade400,
+                          ),
+                          enabled: false,
+                          customTitle: Text(
+                            'Confirmed',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              height: 2,
+                              fontWeight: controller.activeStep == 1
+                                  ? FontWeight.w500
+                                  : FontWeight.normal,
+                              color: controller.activeStep == 1
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
+                          ),
+                        ),
+                        EasyStep(
+                          customStep: CircleAvatar(
+                            radius: 8,
+                            backgroundColor: controller.activeStep >= 2
+                                ? Colors.red
+                                : Colors.grey.shade400,
+                          ),
+                          enabled: false,
+                          customTitle: Text(
+                            'Shipping',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                height: 2,
+                                fontWeight: controller.activeStep == 2
+                                    ? FontWeight.w500
+                                    : FontWeight.normal,
+                                color: controller.activeStep == 2
+                                    ? Colors.black
+                                    : Colors.grey.shade400),
+                          ),
+                        ),
+                        EasyStep(
+                          customStep: CircleAvatar(
+                            radius: 8,
+                            backgroundColor: controller.activeStep >= 3
+                                ? Colors.red
+                                : Colors.grey.shade400,
+                          ),
+                          enabled: false,
+                          customTitle: Text(
+                            'Done',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                height: 2,
+                                fontWeight: controller.activeStep == 3
+                                    ? FontWeight.w500
+                                    : FontWeight.normal,
+                                color: controller.activeStep == 3
+                                    ? Colors.black
+                                    : Colors.grey.shade400),
+                          ),
+                        ),
+                      ],
+                      onStepReached: (index) {},
+                    ),
+                  ),
+                  const Divider(),
                   const SizedBox(height: 8),
                   Text(
                     "${controller.currentOrderDetails?.orderDetails?.first.product?.supplier?.account?.name}",
@@ -49,7 +166,6 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                       "${controller.currentOrderDetails?.employee?.account?.name} - ${controller.currentOrderDetails?.employee?.account?.phone}"),
                   const SizedBox(height: 8),
                   const Divider(),
-                  // const SizedBox(height: 8),
                   ...(controller.currentOrderDetails?.orderDetails ?? [])
                       .map((e) => Container(
                             height: 48,
@@ -81,103 +197,96 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                               ],
                             ),
                           )),
-                  // const SizedBox(height: 8),
                   const Divider(),
                   const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Your bill",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Subtotal"),
-                              Text(
-                                "${controller.currentOrderDetails?.total}đ",
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Fee"),
-                              Text("0đ"),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Total",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16)),
-                              Text(
-                                "${controller.currentOrderDetails?.total}đ",
-                                style: const TextStyle(
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Your bill",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Subtotal"),
+                            Text(
+                              "${controller.currentOrderDetails?.total}đ",
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Fee"),
+                            Text("0đ"),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Total",
+                                style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ]),
-                  ),
+                                    fontSize: 16)),
+                            Text(
+                              "${controller.currentOrderDetails?.total}đ",
+                              style: const TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ]),
                   const SizedBox(height: 8),
                   const Divider(),
                   const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Order details",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Notes"),
-                              Text(
-                                controller.currentOrderDetails?.notes ?? "",
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Order code"),
-                              Text(
-                                "${controller.currentOrderDetails?.id}",
-                                style: const TextStyle(color: Colors.red),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Order time"),
-                              Text(DateFormat('hh:mm dd/MM/yyyy').format(
-                                  DateTime.parse(controller
-                                      .currentOrderDetails!.createdAt!))),
-                            ],
-                          ),
-                        ]),
-                  ),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Order details",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Notes"),
+                            Text(
+                              controller.currentOrderDetails?.notes ?? "",
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Order code"),
+                            Text(
+                              "${controller.currentOrderDetails?.orderCode}",
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Order time"),
+                            Text(DateFormat('hh:mm dd/MM/yyyy').format(
+                                DateTime.parse(controller
+                                    .currentOrderDetails!.createdAt!))),
+                          ],
+                        ),
+                      ]),
                   const SizedBox(height: 24),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

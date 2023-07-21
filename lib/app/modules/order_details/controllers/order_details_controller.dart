@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:ces_app/app/models/order_model.dart';
@@ -11,16 +12,30 @@ class OrderDetailsController extends GetxController {
   var isLoading = false.obs;
   final OrderController orderController = Get.find<OrderController>();
   OrderModel? currentOrderDetails;
+  int activeStep = 0;
   final box = GetStorage();
   String? token;
+  Timer? timer;
   @override
   void onInit() {
     super.onInit();
     token = box.read("token");
     fetchData();
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      fetchData();
+    });
   }
 
-  fetchData() async {
+  @override
+  void onClose() {
+    super.onClose();
+    timer?.cancel();
+  }
+
+  Future<void> fetchData() async {
+    if (kDebugMode) {
+      print("fetch data order details");
+    }
     isLoading(true);
     final futures = <Future>[];
     futures.add(fetchOrderById(orderController.currentOrderId!));
@@ -39,9 +54,9 @@ class OrderDetailsController extends GetxController {
           });
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        print(result.toString());
+
         currentOrderDetails = OrderModel.fromJson(result['data']);
-        print(currentOrderDetails?.toJson());
+        activeStep = currentOrderDetails!.status! - 1;
       } else {
         if (kDebugMode) {
           print('error fetching data + ${response.body}');

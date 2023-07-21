@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ces_app/app/core/utils/extension/app_extension.dart';
 import 'package:ces_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../wrapper/controllers/wrapper_controller.dart';
 import '../controllers/home_controller.dart';
@@ -149,7 +151,7 @@ class HomeView extends GetView<HomeController> {
                 }).toList(),
               ),
               const SizedBox(height: 24),
-              Obx(() => controller.isLoading.value
+              Obx(() => controller.isLoading.value && !controller.isInit
                       ? Container()
                       : SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -233,7 +235,7 @@ class HomeView extends GetView<HomeController> {
                   ),
               const SizedBox(height: 24),
               Obx(
-                () => controller.isLoading.value
+                () => (controller.isLoading.value && !controller.isInit)
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
@@ -265,18 +267,24 @@ class HomeView extends GetView<HomeController> {
                                             aspectRatio: 1,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: item.imageUrl !=
-                                                              null
-                                                          ? NetworkImage(
-                                                              item.imageUrl!,
-                                                            )
-                                                          : Image.asset(
-                                                                  "assets/images/placeholder.jpg")
-                                                              .image)),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: CachedNetworkImage(
+                                                fit: BoxFit.cover,
+                                                imageUrl: item.imageUrl!,
+                                                placeholder: (_, url) =>
+                                                    Shimmer.fromColors(
+                                                  baseColor:
+                                                      Colors.grey.shade300,
+                                                  highlightColor:
+                                                      Colors.grey.shade100,
+                                                  child: Container(),
+                                                ),
+                                                errorWidget: (_, url, error) =>
+                                                    const Icon(Icons.error,
+                                                        color: Colors.grey),
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 16),

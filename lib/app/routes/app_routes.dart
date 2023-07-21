@@ -15,6 +15,8 @@ abstract class Routes {
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const MANAGE_ACCOUNT = _Paths.MANAGE_ACCOUNT;
   static const EDIT_PASSWORD = _Paths.EDIT_PASSWORD;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
+  static const TRANSACTION_DETAILS = _Paths.TRANSACTION_DETAILS;
 }
 
 abstract class _Paths {
@@ -31,4 +33,6 @@ abstract class _Paths {
   static const EDIT_PROFILE = '/edit-profile';
   static const MANAGE_ACCOUNT = '/manage-account';
   static const EDIT_PASSWORD = '/edit-password';
+  static const NOTIFICATION = '/notification';
+  static const TRANSACTION_DETAILS = '/transaction-details';
 }
