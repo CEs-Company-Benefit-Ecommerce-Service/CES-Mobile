@@ -61,7 +61,9 @@ class ProfileView extends GetView<ProfileController> {
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w700, fontSize: 20),
                               ),
+                              const SizedBox(height: 4),
                               Text("${wrapperController.user.value.email}"),
+                              const SizedBox(height: 2),
                               Text("${wrapperController.user.value.phone}"),
                             ],
                           )

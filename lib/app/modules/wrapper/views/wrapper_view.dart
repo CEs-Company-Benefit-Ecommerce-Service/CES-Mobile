@@ -17,25 +17,35 @@ class WrapperView extends GetView<WrapperController> {
             child: BottomAppBar(
               // height: controller.showBottomBar.value ? 70 : 0,
               // elevation: 0,
-              notchMargin: 15,
+              // notchMargin: 15,
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _bottomAppBarItem(
-                      icon: Icons.home,
-                      page: 0,
-                      context,
-                      label: "Home",
-                    ),
+                        icon: Icons.home_outlined,
+                        page: 0,
+                        context,
+                        label: "Home"),
                     _bottomAppBarItem(
-                        icon: Icons.history, page: 1, context, label: "Order"),
+                        icon: Icons.history_outlined,
+                        page: 1,
+                        context,
+                        label: "Order"),
                     _bottomAppBarItem(
                         icon: Icons.wallet, page: 2, context, label: "Wallet"),
                     _bottomAppBarItem(
-                        icon: Icons.person, page: 3, context, label: "Profile"),
+                        icon: Icons.notifications_outlined,
+                        page: 3,
+                        context,
+                        label: "Notification"),
+                    _bottomAppBarItem(
+                        icon: Icons.person_outlined,
+                        page: 4,
+                        context,
+                        label: "Profile"),
                   ],
                 ),
               ),

@@ -166,36 +166,34 @@ class CartView extends GetView<CartController> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  ...homeController.cartProducts
-                      .map((e) => Container(
-                            height: 48,
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AspectRatio(
-                                    aspectRatio: 1,
-                                    child: e['imageUrl'] != null
-                                        ? Image.network(
-                                            e['imageUrl'],
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.asset(
-                                            "assets/images/placeholder.jpg",
-                                            fit: BoxFit.cover,
-                                          )),
-                                const SizedBox(width: 8),
-                                Text("${e['count']} x"),
-                                const SizedBox(width: 8),
-                                Text(e['name']),
-                                Expanded(
-                                    child: Container(
-                                        alignment: Alignment.topRight,
-                                        child: Text("${e['price']}đ")))
-                              ],
-                            ),
-                          ))
-                      .toList(),
+                  ...homeController.cartProducts.map((e) => Container(
+                        height: 48,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AspectRatio(
+                                aspectRatio: 1,
+                                child: e['imageUrl'] != null
+                                    ? Image.network(
+                                        e['imageUrl'],
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(
+                                        "assets/images/placeholder.jpg",
+                                        fit: BoxFit.cover,
+                                      )),
+                            const SizedBox(width: 8),
+                            Text("${e['count']} x"),
+                            const SizedBox(width: 8),
+                            Text(e['name']),
+                            Expanded(
+                                child: Container(
+                                    alignment: Alignment.topRight,
+                                    child: Text("${e['price']}đ")))
+                          ],
+                        ),
+                      )),
                 ],
               ),
             ),

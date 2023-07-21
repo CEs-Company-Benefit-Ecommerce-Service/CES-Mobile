@@ -12,17 +12,17 @@ class WrapperBinding extends Bindings {
     Get.lazyPut<WrapperController>(
       () => WrapperController(),
     );
-    Get.lazyPut<HomeController>(
-      () => HomeController(),
-    );
-    Get.lazyPut<OrderController>(
-      () => OrderController(),
-    );
-    Get.lazyPut<WalletController>(
-      () => WalletController(),
-    );
-    Get.lazyPut<ProfileController>(
-      () => ProfileController(),
-    );
+    // Get.lazyPut<HomeController>(
+    //   () => HomeController(),
+    // );
+    // Get.lazyPut<OrderController>(
+    //   () => OrderController(),
+    // );
+    // Get.lazyPut<WalletController>(
+    //   () => WalletController(),
+    // );
+    // Get.lazyPut<ProfileController>(
+    //   () => ProfileController(),
+    // );
   }
 }

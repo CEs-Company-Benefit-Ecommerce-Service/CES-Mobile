@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:ces_app/app/models/user_model.dart';
 import 'package:ces_app/app/modules/home/controllers/home_controller.dart';
 import 'package:ces_app/app/modules/home/views/home_view.dart';
+import 'package:ces_app/app/modules/notification/controllers/notification_controller.dart';
+import 'package:ces_app/app/modules/notification/views/notification_view.dart';
 import 'package:ces_app/app/modules/order/controllers/order_controller.dart';
 import 'package:ces_app/app/modules/order/views/order_view.dart';
 import 'package:ces_app/app/modules/profile/views/profile_view.dart';
@@ -19,7 +21,7 @@ class WrapperController extends GetxController {
   late PageController pageController;
   ScrollController scrollController = ScrollController();
   var showBottomBar = true.obs;
-  // UserModel? user;
+
   var user = UserModel().obs;
   final box = GetStorage();
 
@@ -29,20 +31,24 @@ class WrapperController extends GetxController {
     const HomeView(),
     const OrderView(),
     const WalletView(),
+    const NotificationView(),
     const ProfileView(),
   ];
 
   void goToTab(int page) {
     if (page == 0) {
       var homeController = Get.find<HomeController>();
-      homeController.fetchData();
+      if (homeController.isInit) homeController.fetchData();
     } else if (page == 1) {
       var orderController = Get.find<OrderController>();
-      orderController.fetchData();
+      if (orderController.isInit) orderController.fetchData();
     } else if (page == 2) {
       var walletController = Get.find<WalletController>();
-      walletController.fetchData();
+      if (walletController.isInit) walletController.fetchData();
     } else if (page == 3) {
+      var notificationController = Get.find<NotificationController>();
+      if (notificationController.isInit) notificationController.fetchData();
+    } else if (page == 4) {
       // var profileController = Get.find<ProfileController>();
       // profileController.fetchData();
     }

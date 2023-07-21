@@ -81,7 +81,9 @@ class ManageAccountView extends GetView<ManageAccountController> {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(Routes.EDIT_PASSWORD);
+              },
               child: Column(
                 children: [
                   Padding(
@@ -96,14 +98,7 @@ class ManageAccountView extends GetView<ManageAccountController> {
                             color: Colors.blue.shade900,
                           ),
                           const SizedBox(width: 8),
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Logout"),
-                              Text(
-                                  "You will need to log in again if you want to use ces."),
-                            ],
-                          )
+                          const Text("Logout"),
                         ]),
                         const Icon(Icons.arrow_forward_ios, size: 12)
                       ],
@@ -113,6 +108,7 @@ class ManageAccountView extends GetView<ManageAccountController> {
                 ],
               ),
             ),
+
             // InkWell(
             //   onTap: () {},
             //   child: const Column(
