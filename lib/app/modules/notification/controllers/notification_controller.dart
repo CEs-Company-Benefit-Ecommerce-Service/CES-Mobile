@@ -63,7 +63,9 @@ class NotificationController extends GetxController {
   }
 
   Future<void> fetchData() async {
-    print("fetch data from notification controller");
+    if (kDebugMode) {
+      print("fetch data from notification controller");
+    }
     isLoading(true);
     final futures = <Future>[];
     futures.add(fetchNotification());

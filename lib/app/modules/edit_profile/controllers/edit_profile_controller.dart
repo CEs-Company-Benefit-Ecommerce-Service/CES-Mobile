@@ -22,9 +22,7 @@ class EditProfileController extends GetxController {
         AccountPayloadModel payload = AccountPayloadModel(
           name: editProfileKey.currentState?.value['name'],
           phone: editProfileKey.currentState?.value['phone'],
-          // id: wrapperController.user?.id,
           email: wrapperController.user.value.email,
-          // address: wrapperController.user?.address,
           // imageUrl: wrapperController.user?.imageUrl,
           role: wrapperController.user.value.role,
           companyId: wrapperController.user.value.companyId,
@@ -39,9 +37,10 @@ class EditProfileController extends GetxController {
             },
             body: jsonEncode(payload));
 
-        print(jsonDecode(response.body));
-        await wrapperController.fetchUser();
-        Get.back();
+        if (response.statusCode == 200) {
+          await wrapperController.fetchUser();
+          Get.back();
+        }
 
         // if (response.statusCode == 200) {
         //   var result = jsonDecode(response.body);
@@ -65,10 +64,10 @@ class EditProfileController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   // @override
   // void onReady() {

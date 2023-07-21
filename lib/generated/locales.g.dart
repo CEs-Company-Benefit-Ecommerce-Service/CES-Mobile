@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
 
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: lines_longer_than_80_chars, constant_identifier_names
 // ignore: avoid_classes_with_only_static_members
 class AppTranslation {
   static Map<String, Map<String, String>> translations = {
@@ -39,7 +39,7 @@ class LocaleKeys {
   static const Views = 'Views';
   static const Episode = 'Episode';
   static const Episodes = 'Episodes';
-  static const Infomation = 'Infomation';
+  static const Information = 'Information';
   static const Comment = 'Comment';
   static const Genres = 'Genres';
   static const RememberPassword = 'RememberPassword';
@@ -76,7 +76,7 @@ class Locales {
     'Views': 'Views',
     'Episode': 'Episode',
     'Episodes': 'Episodes',
-    'Infomation': 'Infomation',
+    'Information': 'Information',
     'Comment': 'Comment',
     'Genres': 'Genres',
     'RememberPassword': 'Remember Password',

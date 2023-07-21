@@ -113,11 +113,11 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 InkWell(
                   onTap: () {},
-                  child: Column(
+                  child: const Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: const Row(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(children: [
@@ -132,17 +132,17 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                       ),
-                      const Divider(height: 0),
+                      Divider(height: 0),
                     ],
                   ),
                 ),
                 InkWell(
                   onTap: () {},
-                  child: Column(
+                  child: const Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: const Row(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(children: [
@@ -157,7 +157,7 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                       ),
-                      const Divider(height: 0),
+                      Divider(height: 0),
                     ],
                   ),
                 ),
@@ -165,11 +165,11 @@ class ProfileView extends GetView<ProfileController> {
                   onTap: () {
                     Get.toNamed(Routes.MANAGE_ACCOUNT);
                   },
-                  child: Column(
+                  child: const Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: const Row(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(children: [
@@ -184,7 +184,7 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                       ),
-                      const Divider(height: 0),
+                      Divider(height: 0),
                     ],
                   ),
                 ),
@@ -208,10 +208,10 @@ class ProfileView extends GetView<ProfileController> {
                                 Icons.list_alt,
                                 color: Colors.yellow.shade900,
                               ),
-                              SizedBox(width: 8),
-                              Text("Privacy & Terms"),
+                              const SizedBox(width: 8),
+                              const Text("Privacy & Terms"),
                             ]),
-                            Icon(Icons.arrow_forward_ios, size: 12)
+                            const Icon(Icons.arrow_forward_ios, size: 12)
                           ],
                         ),
                       ),
@@ -221,10 +221,10 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 InkWell(
                   onTap: () {},
-                  child: Column(
+                  child: const Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: EdgeInsets.symmetric(vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -240,7 +240,7 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                       ),
-                      const Divider(height: 0),
+                      Divider(height: 0),
                     ],
                   ),
                 ),

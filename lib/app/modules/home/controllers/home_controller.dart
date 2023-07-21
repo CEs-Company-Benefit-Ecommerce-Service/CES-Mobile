@@ -80,7 +80,9 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchData() async {
-    print("fetch data from home controller");
+    if (kDebugMode) {
+      print("fetch data from home controller");
+    }
     isLoading(true);
     final futures = <Future>[];
     futures.add(fetchProduct());

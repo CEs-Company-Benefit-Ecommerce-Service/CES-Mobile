@@ -31,7 +31,9 @@ class WalletController extends GetxController {
   }
 
   fetchData() async {
-    print("fetch data from wallet controller");
+    if (kDebugMode) {
+      print("fetch data from wallet controller");
+    }
     isLoading(true);
     final futures = <Future>[];
     futures.add(fetchWallet());
