@@ -3,6 +3,7 @@ class OrderModel {
   int? total;
   String? notes;
   String? address;
+  String? orderCode;
   int? status;
   int? debtStatus;
   String? createdAt;
@@ -17,6 +18,7 @@ class OrderModel {
       this.total,
       this.notes,
       this.address,
+      this.orderCode,
       this.status,
       this.debtStatus,
       this.createdAt,
@@ -31,6 +33,7 @@ class OrderModel {
     total = json['total'];
     notes = json['notes'];
     address = json['address'];
+    orderCode = json['orderCode'];
     status = json['status'];
     debtStatus = json['debtStatus'];
     createdAt = json['createdAt'];
@@ -54,6 +57,7 @@ class OrderModel {
     data['total'] = this.total;
     data['notes'] = this.notes;
     data['address'] = this.address;
+    data['orderCode'] = this.orderCode;
     data['status'] = this.status;
     data['debtStatus'] = this.debtStatus;
     data['createdAt'] = this.createdAt;
