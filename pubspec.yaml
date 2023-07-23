@@ -7,8 +7,8 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
-  get: ^4.6.5
-  get_storage: ^2.1.1
+  get:
+  get_storage:
   carousel_slider: ^4.2.1
   http:
   intl:
@@ -24,7 +24,9 @@ dependencies:
   # flutter_local_notifications:
   # shared_preferences:
   # firebase_auth:
-  # firebase_core:
+  firebase_messaging: ^14.6.5
+  firebase_core:
+  # firebase_messaging:
   # flutter_slidable:
   # Test device package
   device_preview: ^1.1.0

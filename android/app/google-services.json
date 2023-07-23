@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502920115519",
+    "project_id": "my-storage-ces",
+    "storage_bucket": "my-storage-ces.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502920115519:android:07af7d2e5ebf8e04624f8a",
+        "android_client_info": {
+          "package_name": "com.example.ces_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502920115519-ubqblm3lb2okvufooofg3tjtju8dl2ta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEb_Z5PA6jLUIEOzcmQHeVXwq3eDKbAkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502920115519-ubqblm3lb2okvufooofg3tjtju8dl2ta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

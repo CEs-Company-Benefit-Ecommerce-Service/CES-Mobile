@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ces_app/app/core/services/notification_service.dart';
 import 'package:ces_app/app/models/login_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,19 @@ class AuthenticationController extends GetxController {
     if (loginKey.currentState!.saveAndValidate()) {
       try {
         isLoading(true);
+
+        var payload = {
+          "email": loginKey.currentState?.value['email'],
+          "password": loginKey.currentState?.value['password'],
+          "fcmToken": box.read("fcmToken")
+        };
+
         http.Response response =
             await http.post(Uri.tryParse('https://api-dev.ces.bio/api/login')!,
                 headers: <String, String>{
                   'Content-Type': 'application/json; charset=UTF-8',
                 },
-                body: jsonEncode(loginKey.currentState?.value));
+                body: jsonEncode(payload));
         if (response.statusCode == 200) {
           var result = jsonDecode(response.body);
           loginModel = LoginModel.fromJson(result['data']);
