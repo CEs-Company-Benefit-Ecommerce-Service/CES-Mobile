@@ -8,16 +8,15 @@ class SplashView extends GetView<SplashController> {
   const SplashView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('SplashView'),
-        centerTitle: true,
+    return Container(
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        color: Color(0xff243763),
       ),
-      body: const Center(
-        child: Text(
-          'SplashView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 90.0),
+      child: Image.asset(
+        "assets/images/logo-no-bg.png",
+        fit: BoxFit.scaleDown,
       ),
     );
   }
