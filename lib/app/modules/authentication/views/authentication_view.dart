@@ -74,21 +74,29 @@ class AuthenticationView extends GetView<AuthenticationController> {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: FormBuilderTextField(
-                    name: 'password',
-                    initialValue: "123456",
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        )),
-                  ),
+                  child: Obx(() => FormBuilderTextField(
+                        name: 'password',
+                        initialValue: "123456",
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
+                        obscureText: !controller.showPass.value,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: controller.showPass.value
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
+                              onPressed: () {
+                                controller.showPass(!controller.showPass.value);
+                              },
+                            ),
+                            fillColor: Colors.grey.shade200,
+                            filled: true,
+                            hintText: "Password",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                      )),
                 ),
                 const SizedBox(
                   height: 32,

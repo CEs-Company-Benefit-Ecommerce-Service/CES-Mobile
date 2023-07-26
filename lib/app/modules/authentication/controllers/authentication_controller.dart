@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:ces_app/app/core/services/notification_service.dart';
 import 'package:ces_app/app/models/login_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,8 @@ class AuthenticationController extends GetxController {
   final box = GetStorage();
 
   var isLoading = false.obs;
+  var showPass = false.obs;
+
   LoginModel? loginModel;
 
   void login() async {
@@ -24,7 +25,7 @@ class AuthenticationController extends GetxController {
         var payload = {
           "email": loginKey.currentState?.value['email'],
           "password": loginKey.currentState?.value['password'],
-          "fcmToken": box.read("fcmToken")
+          "fcmToken": await box.read("fcmToken")
         };
 
         http.Response response =
@@ -41,7 +42,7 @@ class AuthenticationController extends GetxController {
           box.write("accountId", loginModel?.account?.id);
           box.write("token", loginModel?.token?.accessToken);
 
-          Get.offNamed('/wrapper');
+          Get.offAllNamed('/wrapper');
         } else {
           if (kDebugMode) {
             print(
@@ -55,23 +56,7 @@ class AuthenticationController extends GetxController {
         }
       } finally {
         isLoading(false);
-        // Get.delete<AuthenticationController>();
       }
     }
   }
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
-
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
 }
