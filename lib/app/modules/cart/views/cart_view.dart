@@ -1,6 +1,7 @@
 import 'package:ces_app/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/cart_controller.dart';
 
@@ -11,7 +12,7 @@ class CartView extends GetView<CartController> {
     final HomeController homeController = Get.find<HomeController>();
     var subTotal = homeController.cartProducts
         .fold(0, (sum, item) => sum + item['price'] * item['count'] as int);
-    var fee = 5000;
+    var fee = 0;
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -24,59 +25,50 @@ class CartView extends GetView<CartController> {
         centerTitle: true,
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 80,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Total:",
-                          style: TextStyle(
-                              color: Colors.grey.shade800, fontSize: 16)),
-                      Text(
-                        "${subTotal + fee}đ",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 16),
-                      ),
-                    ]),
-              ),
-              Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                      height: 40,
-                      child: Obx(() => ElevatedButton(
-                          style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color(0xff243763)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ))),
-                          onPressed: controller.isLoading.value
-                              ? null
-                              : () =>
-                                  controller.order(homeController.cartProducts),
-                          child: controller.isLoading.value
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 3,
-                                  ),
-                                )
-                              : const Text("Order"))))),
-            ]),
-          ],
-        ),
+        height: 64,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(children: [
+          Expanded(
+            flex: 1,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Total:",
+                      style:
+                          TextStyle(color: Colors.grey.shade800, fontSize: 16)),
+                  Text(
+                    "${NumberFormat.decimalPattern().format(fee + subTotal)}đ",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 16),
+                  ),
+                ]),
+          ),
+          Expanded(
+              flex: 2,
+              child: Obx(() => ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: const Color(0xff243763),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      )),
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : () => controller.order(homeController.cartProducts),
+                  child: controller.isLoading.value
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        )
+                      : const Text("Order")))),
+        ]),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -190,7 +182,8 @@ class CartView extends GetView<CartController> {
                             Expanded(
                                 child: Container(
                                     alignment: Alignment.topRight,
-                                    child: Text("${e['price']}đ")))
+                                    child: Text(
+                                        "${NumberFormat.decimalPattern().format(e['price'])}đ")))
                           ],
                         ),
                       )),
@@ -215,7 +208,7 @@ class CartView extends GetView<CartController> {
                       children: [
                         const Text("Subtotal"),
                         Text(
-                          "$subTotalđ",
+                          "${NumberFormat.decimalPattern().format(subTotal)}đ",
                         ),
                       ],
                     ),
@@ -223,7 +216,7 @@ class CartView extends GetView<CartController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Fee"),
-                        Text("$feeđ"),
+                        Text("${NumberFormat.decimalPattern().format(fee)}đ"),
                       ],
                     ),
                     const Divider(),
@@ -236,7 +229,7 @@ class CartView extends GetView<CartController> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16)),
                         Text(
-                          "${subTotal + fee}đ",
+                          "${NumberFormat.decimalPattern().format(fee + subTotal)}đ",
                           style: const TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.w500,
@@ -292,11 +285,6 @@ class CartView extends GetView<CartController> {
                     ]),
                   ],
                 )),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              color: Colors.white,
-            ),
           ]),
         ),
       ),

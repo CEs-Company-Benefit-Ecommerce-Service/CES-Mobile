@@ -49,12 +49,12 @@ class NotificationView extends GetView<NotificationController> {
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Column(
                             children: [
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 12),
                               Opacity(
                                 opacity: e.isRead! ? 0.5 : 1,
                                 child: Column(
                                   children: [
-                                    const SizedBox(height: 4),
+                                    // const SizedBox(height: 4),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -130,11 +130,11 @@ class NotificationView extends GetView<NotificationController> {
                                         )
                                       ],
                                     ),
-                                    const SizedBox(height: 4),
+                                    // const SizedBox(height: 4),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 12),
                               const Divider(height: 0),
                             ],
                           ),

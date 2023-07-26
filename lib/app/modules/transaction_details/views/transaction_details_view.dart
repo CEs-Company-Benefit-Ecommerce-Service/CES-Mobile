@@ -57,7 +57,7 @@ class TransactionDetailsView extends GetView<TransactionDetailsController> {
                             ),
                             const SizedBox(width: 16),
                             Text(
-                              "${walletController.currentTransactionDetails?.type == 1 ? "+" : "-"}${NumberFormat.decimalPattern().format(walletController.currentTransactionDetails?.total)}",
+                              "${walletController.currentTransactionDetails?.type == 1 ? "+" : "-"}${NumberFormat.decimalPattern().format(walletController.currentTransactionDetails?.total)}đ",
                               style: const TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 24),
                             ),
