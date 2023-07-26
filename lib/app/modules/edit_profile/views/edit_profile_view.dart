@@ -96,6 +96,7 @@ class EditProfileView extends GetView<EditProfileController> {
                   const SizedBox(height: 4),
                   FormBuilderTextField(
                     name: 'phone',
+                    keyboardType: TextInputType.phone,
                     initialValue: wrapperController.user.value.phone,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
@@ -103,7 +104,7 @@ class EditProfileView extends GetView<EditProfileController> {
                     decoration: const InputDecoration(
                       fillColor: Colors.transparent,
                       filled: true,
-                      hintText: "Name",
+                      hintText: "Phone",
                       contentPadding: EdgeInsets.all(0),
                     ),
                   ),

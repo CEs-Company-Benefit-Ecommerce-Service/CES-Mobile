@@ -1,6 +1,7 @@
 import 'package:ces_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../controllers/manage_account_controller.dart';
 
@@ -82,7 +83,9 @@ class ManageAccountView extends GetView<ManageAccountController> {
             ),
             InkWell(
               onTap: () {
-                Get.toNamed(Routes.EDIT_PASSWORD);
+                GetStorage().write("token", null);
+                GetStorage().write("fcmToken", null);
+                Get.offAllNamed(Routes.AUTHENTICATION);
               },
               child: Column(
                 children: [
