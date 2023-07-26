@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:ces_app/app/models/category_model.dart';
 import 'package:ces_app/app/models/product_model.dart';
+import 'package:ces_app/app/routes/app_pages.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,6 +16,7 @@ class HomeController extends GetxController {
   List<CategoryModel>? categoryList;
   final box = GetStorage();
   String? token;
+  CategoryModel? currentCate;
   // Add to cart
   var isAddedToCart = false.obs;
   var selectedProduct = {};
@@ -76,7 +79,12 @@ class HomeController extends GetxController {
   }
 
   void navigateToCart() {
-    Get.toNamed("/cart");
+    Get.toNamed(Routes.CART);
+  }
+
+  void navigateToProduct(CategoryModel cat) {
+    currentCate = cat;
+    Get.toNamed(Routes.PRODUCT);
   }
 
   Future<void> fetchData() async {
