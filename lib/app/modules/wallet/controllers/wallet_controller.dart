@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class WalletController extends GetxController {
   bool isInit = false;
   var isLoading = false.obs;
+  var showBalance = false.obs;
   List<WalletTransactionModel>? walletTransactionList;
   List<WalletModel>? walletList;
   String? currentTransactionId;
@@ -90,9 +91,8 @@ class WalletController extends GetxController {
         walletTransactionList =
             data.map((e) => WalletTransactionModel.fromJson(e)).toList();
       } else {
-        if (response.statusCode == 500) {
-          fetchData();
-        }
+        fetchData();
+
         if (kDebugMode) {
           print('error fetching data walletTransactionList + ${response.body}');
         }

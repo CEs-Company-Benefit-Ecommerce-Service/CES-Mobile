@@ -10,16 +10,60 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class OrderController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetSingleTickerProviderStateMixin, StateMixin {
+  String statusCodeToString(int statusCode) {
+    switch (statusCode) {
+      case 0:
+        return "All";
+      case 1:
+        return "New";
+      case 2:
+        return "Confirm";
+      case 3:
+        return "Waiting for ship";
+      case 4:
+        return "Complete";
+      case 5:
+        return "Cancel";
+      default:
+        return "";
+    }
+  }
+
+  String dateRangeCodeToString(int statusCode) {
+    switch (statusCode) {
+      case 0:
+        return "All date";
+      case 1:
+        return "Today";
+      case 2:
+        return "7 days ago";
+      case 3:
+        return "30 days ago";
+      case 4:
+        return "60 days ago";
+      case 5:
+        return "90 days ago";
+      default:
+        return "";
+    }
+  }
+
   bool isInit = false;
   var isLoading = false.obs;
-  List<OrderModel>? orderHistoryList;
-  List<OrderModel>? orderIncomingList;
+  var orderHistoryList = <OrderModel>[].obs;
+  List<OrderModel> orderIncomingList = [];
   final box = GetStorage();
   String? token;
   String? currentOrderId;
   TabController? tabController;
   Timer? timer;
+
+  // Filter
+  List statusCodeFilter = [0, 4, 5];
+  var currentFilterOrderStatus = 0.obs;
+  List dateRangeCodeFilter = [0, 1, 2, 3, 4, 5];
+  var currentFilterDateRange = 0.obs;
 
   @override
   void onInit() {
@@ -35,6 +79,7 @@ class OrderController extends GetxController
   @override
   void onClose() {
     tabController?.dispose();
+    timer?.cancel();
     super.onClose();
   }
 
@@ -86,7 +131,7 @@ class OrderController extends GetxController
     try {
       http.Response response = await http.get(
           Uri.tryParse(
-              'https://api-dev.ces.bio/api/order?Sort=CreatedAt&Order=desc&Type=2')!,
+              'https://api-dev.ces.bio/api/order?Sort=CreatedAt&Order=desc${currentFilterOrderStatus.value == 0 ? "&Type=2" : "&Status=${currentFilterOrderStatus.value}"}')!,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -96,7 +141,8 @@ class OrderController extends GetxController
         var result = jsonDecode(response.body);
         List data = result['data'];
 
-        orderHistoryList = data.map((e) => OrderModel.fromJson(e)).toList();
+        orderHistoryList.value =
+            data.map((e) => OrderModel.fromJson(e)).toList();
       } else {
         fetchData();
         if (kDebugMode) {
@@ -112,16 +158,11 @@ class OrderController extends GetxController
 
   void navigateToDetails(id) {
     currentOrderId = id;
-    Get.toNamed(Routes.ORDER_DETAILS);
+    Get.toNamed(Routes.ORDER_DETAILS)?.then((_) => fetchData());
   }
 
   // @override
   // void onReady() {
   //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
   // }
 }
