@@ -6,7 +6,15 @@ class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<String?> getDeviceFirebaseToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
+    String? token;
+    if (kIsWeb) {
+      token = await _firebaseMessaging.getToken(
+          vapidKey:
+              "BHhNngd8WVAXLfuXi-CadIV4fBJqxjhOQbS19PN3xE1HAAVhmqrxLuky9XzK5GX_bmrammxRUlGwPdeHWgd0EgA");
+    } else {
+      token = await _firebaseMessaging.getToken();
+    }
+
     return token;
   }
 

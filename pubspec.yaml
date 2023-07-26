@@ -18,19 +18,18 @@ dependencies:
 
   cached_network_image:
   shimmer:
-  # flutter_native_splash:
+  # flutter_native_splash: ^2.3.1
   # flutter_svg:
-
-  # flutter_local_notifications:
-  # shared_preferences:
+  badges: ^3.1.1
+  auto_size_text: ^3.0.0
+  flutter_local_notifications:
   # firebase_auth:
   firebase_messaging: ^14.6.5
   firebase_core:
-  # firebase_messaging:
+  zoom_tap_animation: ^1.1.0
   # flutter_slidable:
   # Test device package
   device_preview: ^1.1.0
-  zoom_tap_animation: ^1.1.0
   flutter:
     sdk: flutter
 

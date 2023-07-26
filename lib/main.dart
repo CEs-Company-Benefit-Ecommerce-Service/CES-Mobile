@@ -12,8 +12,7 @@ import 'generated/locales.g.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-
-  if (!GetPlatform.isWindows) {
+  if (!GetPlatform.isWindows || GetPlatform.isWeb) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -21,13 +20,13 @@ void main() async {
   }
 
   runApp(
-    //
-    //   DevicePreview(
-    // enabled: true,
-    // builder: (context) => const MyApp(),
-    // )
-    const MyApp(),
-  );
+//
+      DevicePreview(
+    enabled: true,
+    builder: (context) => const MyApp(),
+  )
+      // const MyApp(),
+      );
 }
 
 class MyApp extends StatelessWidget {
@@ -48,6 +47,7 @@ class MyApp extends StatelessWidget {
       // Route
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      //
 
       // Theme
     );
