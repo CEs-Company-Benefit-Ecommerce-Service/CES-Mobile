@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:ces_app/app/core/utils/utils.dart';
 import 'package:ces_app/app/models/order_model.dart';
 import 'package:ces_app/app/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
@@ -11,44 +12,6 @@ import 'package:http/http.dart' as http;
 
 class OrderController extends GetxController
     with GetSingleTickerProviderStateMixin, StateMixin {
-  String statusCodeToString(int statusCode) {
-    switch (statusCode) {
-      case 0:
-        return "All";
-      case 1:
-        return "New";
-      case 2:
-        return "Confirm";
-      case 3:
-        return "Waiting for ship";
-      case 4:
-        return "Complete";
-      case 5:
-        return "Cancel";
-      default:
-        return "";
-    }
-  }
-
-  String dateRangeCodeToString(int statusCode) {
-    switch (statusCode) {
-      case 0:
-        return "All date";
-      case 1:
-        return "Today";
-      case 2:
-        return "7 days ago";
-      case 3:
-        return "30 days ago";
-      case 4:
-        return "60 days ago";
-      case 5:
-        return "90 days ago";
-      default:
-        return "";
-    }
-  }
-
   bool isInit = false;
   var isLoading = false.obs;
   var orderHistoryList = <OrderModel>[].obs;
@@ -72,7 +35,7 @@ class OrderController extends GetxController
     tabController = TabController(vsync: this, length: 2);
     fetchData();
     timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      fetchData();
+      fetchOrderIncoming();
     });
   }
 
@@ -128,15 +91,21 @@ class OrderController extends GetxController
   }
 
   fetchOrderHistory() async {
+    if (kDebugMode) {
+      print("fetchOrderHistory");
+    }
     try {
+      DateRange dateRange = getDateRange(currentFilterDateRange.value);
+
       http.Response response = await http.get(
           Uri.tryParse(
-              'https://api-dev.ces.bio/api/order?Sort=CreatedAt&Order=desc${currentFilterOrderStatus.value == 0 ? "&Type=2" : "&Status=${currentFilterOrderStatus.value}"}')!,
+              'https://api-dev.ces.bio/api/order?Sort=CreatedAt&Order=desc&${currentFilterOrderStatus.value == 0 ? "Type=2" : "Status=${currentFilterOrderStatus.value}"}&From=${Uri.encodeQueryComponent(dateRange.startDate)}&To=${Uri.encodeQueryComponent(dateRange.endDate)}')!,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer $token',
           });
+
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         List data = result['data'];
@@ -160,9 +129,4 @@ class OrderController extends GetxController
     currentOrderId = id;
     Get.toNamed(Routes.ORDER_DETAILS)?.then((_) => fetchData());
   }
-
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
 }

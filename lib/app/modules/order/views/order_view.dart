@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ces_app/app/core/utils/utils.dart';
 import 'package:ces_app/app/modules/wrapper/controllers/wrapper_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,13 +22,6 @@ class OrderView extends GetView<OrderController> {
           'Order',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.date_range),
-        //     color: Colors.black,
-        //     onPressed: () {},
-        //   )
-        // ],
       ),
       body: Column(
         children: [
@@ -176,17 +170,16 @@ class OrderView extends GetView<OrderController> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(controller
-                                                        .statusCodeToString(
-                                                            e.status!)),
+                                                    Text(statusCodeToString(
+                                                        e.status!)),
                                                   ]),
                                             ]),
                                           ),
                                         ),
                                         Container(
-                                            height: 12,
+                                            height: 8,
                                             decoration: BoxDecoration(
-                                                color: Colors.grey.shade300))
+                                                color: Colors.grey.shade300)),
                                       ],
                                     ),
                                   ),
@@ -227,98 +220,95 @@ class OrderView extends GetView<OrderController> {
                                     child: InkWell(
                                       onTap: () {
                                         showModalBottomSheet(
+                                            useRootNavigator: true,
+                                            isScrollControlled: false,
+                                            useSafeArea: true,
                                             shape: const RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.vertical(
                                                         top: Radius.circular(
                                                             8))),
                                             context: context,
-                                            builder: (BuildContext context) =>
-                                                SingleChildScrollView(
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 12,
-                                                                vertical: 8),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            const Text(
-                                                                "Choose order status",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        16)),
-                                                            IconButton(
-                                                              icon: const Icon(
-                                                                  Icons.close),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                            )
-                                                          ],
-                                                        ),
+                                            builder: (context) => Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 12,
+                                                          vertical: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                              "Choose order status",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      16)),
+                                                          IconButton(
+                                                            icon: const Icon(
+                                                                Icons.close),
+                                                            onPressed: () {
+                                                              Get.back();
+                                                            },
+                                                          )
+                                                        ],
                                                       ),
-                                                      const Divider(height: 0),
-                                                      const SizedBox(height: 4),
-                                                      ...controller
-                                                          .statusCodeFilter
-                                                          .map(
-                                                        (e) => InkWell(
-                                                          onTap: () {
-                                                            controller
-                                                                .currentFilterOrderStatus
-                                                                .value = e;
-                                                            controller
-                                                                .fetchOrderHistory();
+                                                    ),
+                                                    const Divider(height: 0),
+                                                    const SizedBox(height: 4),
+                                                    ...controller
+                                                        .statusCodeFilter
+                                                        .map(
+                                                      (e) => InkWell(
+                                                        onTap: () {
+                                                          controller
+                                                              .currentFilterOrderStatus
+                                                              .value = e;
+                                                          controller
+                                                              .fetchOrderHistory();
 
-                                                            Get.back();
-                                                          },
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        12,
-                                                                    vertical:
-                                                                        8),
-                                                            child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(controller
-                                                                      .statusCodeToString(
-                                                                          e)),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Icon(
-                                                                        Icons
-                                                                            .check,
-                                                                        color: controller.currentFilterOrderStatus ==
-                                                                                e
-                                                                            ? Colors.red
-                                                                            : Colors.transparent),
-                                                                  ),
-                                                                ]),
-                                                          ),
+                                                          Get.back();
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      12,
+                                                                  vertical: 8),
+                                                          child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                    statusCodeToString(
+                                                                        e)),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Icon(
+                                                                      Icons
+                                                                          .check,
+                                                                      color: controller.currentFilterOrderStatus == e
+                                                                          ? Colors
+                                                                              .red
+                                                                          : Colors
+                                                                              .transparent),
+                                                                ),
+                                                              ]),
                                                         ),
                                                       ),
-                                                      const SizedBox(
-                                                          height: 16),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                    const SizedBox(height: 32),
+                                                  ],
                                                 ));
                                       },
                                       child: Row(
@@ -329,10 +319,9 @@ class OrderView extends GetView<OrderController> {
                                                         .value ==
                                                     0
                                                 ? "Status"
-                                                : controller.statusCodeToString(
-                                                    controller
-                                                        .currentFilterOrderStatus
-                                                        .value),
+                                                : statusCodeToString(controller
+                                                    .currentFilterOrderStatus
+                                                    .value),
                                             style: TextStyle(
                                                 color: controller
                                                             .currentFilterOrderStatus
@@ -384,29 +373,29 @@ class OrderView extends GetView<OrderController> {
                                                                 horizontal: 12,
                                                                 vertical: 8),
                                                         child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            const Text(
-                                                                "Choose date range",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        16)),
-                                                            IconButton(
-                                                              icon: const Icon(
-                                                                  Icons.close),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                            )
-                                                          ],
-                                                        ),
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                  "Choose date range",
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          16)),
+                                                              IconButton(
+                                                                icon: const Icon(
+                                                                    Icons
+                                                                        .close),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                              )
+                                                            ]),
                                                       ),
                                                       const Divider(height: 0),
                                                       const SizedBox(height: 4),
@@ -435,8 +424,8 @@ class OrderView extends GetView<OrderController> {
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 children: [
-                                                                  Text(controller
-                                                                      .dateRangeCodeToString(
+                                                                  Text(
+                                                                      dateRangeCodeToString(
                                                                           e)),
                                                                   Padding(
                                                                     padding:
@@ -455,20 +444,20 @@ class OrderView extends GetView<OrderController> {
                                                         ),
                                                       ),
                                                       const SizedBox(
-                                                          height: 16),
+                                                          height: 32),
                                                     ],
                                                   ),
                                                 ));
                                       },
                                       child: Row(
                                         children: [
-                                          SizedBox(width: 4),
+                                          const SizedBox(width: 4),
                                           Text(
                                             controller.currentFilterDateRange
                                                         .value ==
                                                     0
                                                 ? "Date range"
-                                                : controller.dateRangeCodeToString(
+                                                : dateRangeCodeToString(
                                                     controller
                                                         .currentFilterDateRange
                                                         .value),
@@ -604,12 +593,13 @@ class OrderView extends GetView<OrderController> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Text(controller
-                                                      .statusCodeToString(
-                                                          e.status!)),
+                                                  Text(statusCodeToString(
+                                                      e.status!)),
                                                   ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
+                                                        // minimumSize:
+                                                        //     const Size(64, 28),
                                                         shape:
                                                             RoundedRectangleBorder(
                                                           borderRadius:
@@ -624,8 +614,8 @@ class OrderView extends GetView<OrderController> {
                                                         padding:
                                                             const EdgeInsets
                                                                     .symmetric(
-                                                                vertical: 8,
-                                                                horizontal: 8),
+                                                                vertical: 0,
+                                                                horizontal: 16),
                                                       ),
                                                       onPressed: () {},
                                                       child: const Text(
