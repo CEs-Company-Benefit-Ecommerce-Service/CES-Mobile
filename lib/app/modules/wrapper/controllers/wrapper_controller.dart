@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:ces_app/app/models/user_model.dart';
@@ -36,12 +37,22 @@ class WrapperController extends GetxController {
   ];
 
   void goToTab(int page) {
+    if (page != 1) {
+      var orderController = Get.find<OrderController>();
+      orderController.timer?.cancel();
+    }
     if (page == 0) {
       var homeController = Get.find<HomeController>();
       if (homeController.isInit) homeController.fetchData();
     } else if (page == 1) {
       var orderController = Get.find<OrderController>();
-      if (orderController.isInit) orderController.fetchData();
+      if (orderController.isInit) {
+        orderController.fetchOrderIncoming();
+        orderController.timer =
+            Timer.periodic(const Duration(seconds: 10), (timer) {
+          orderController.fetchOrderIncoming();
+        });
+      }
     } else if (page == 2) {
       var walletController = Get.find<WalletController>();
       if (walletController.isInit) walletController.fetchData();
