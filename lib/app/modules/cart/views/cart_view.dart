@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ces_app/app/models/product_model.dart';
 import 'package:ces_app/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../controllers/cart_controller.dart';
 
@@ -9,20 +14,19 @@ class CartView extends GetView<CartController> {
   const CartView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // final WrapperController wrapperController = Get.find<WrapperController>();
     final HomeController homeController = Get.find<HomeController>();
     var subTotal = homeController.cartProducts
         .fold(0, (sum, item) => sum + item['price'] * item['count'] as int);
     var fee = 0;
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        title: const Text(
-          'Your order',
-        ),
+        foregroundColor: Colors.red,
+        elevation: 0.5,
         centerTitle: true,
+        title: const Text('Your order',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
       ),
       bottomNavigationBar: BottomAppBar(
         height: 64,
@@ -51,7 +55,7 @@ class CartView extends GetView<CartController> {
                       foregroundColor: Colors.white,
                       backgroundColor: const Color(0xff243763),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 8),
+                          vertical: 16, horizontal: 8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       )),
@@ -70,223 +74,420 @@ class CartView extends GetView<CartController> {
                       : const Text("Order")))),
         ]),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(children: [
-            const SizedBox(height: 8),
-            Container(
-              width: double.infinity,
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          // const Text("Delivery address"),
+          // Text(wrapperController.user.value.address ?? "Company address"),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(children: [
+              // const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Row(children: [
-                    Icon(
-                      Icons.warning_rounded,
-                      color: Colors.yellow,
-                    ),
-                    SizedBox(width: 8),
-                    Text("Please check correctly delivery place")
-                  ]),
-                  const Divider(),
-                  Row(children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      "Company A - D1 SHTP",
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            child: const Icon(Icons.chevron_right,
-                                color: Colors.grey)))
-                  ]),
-                  const Divider(),
-                  Row(children: [
-                    const Icon(
-                      Icons.access_time,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      "Delivery now:",
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            child: const Icon(Icons.chevron_right,
-                                color: Colors.grey)))
-                  ]),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        "Your order",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 16),
-                      ),
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          child: InkWell(
-                            onTap: () => Get.back(),
-                            child: const Text(
-                              "Add more",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                  const Text(
+                    "Your order",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                   ),
-                  const SizedBox(height: 8),
-                  ...homeController.cartProducts.map((e) => Container(
-                        height: 48,
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AspectRatio(
-                                aspectRatio: 1,
-                                child: e['imageUrl'] != null
-                                    ? Image.network(
-                                        e['imageUrl'],
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Image.asset(
-                                        "assets/images/placeholder.jpg",
-                                        fit: BoxFit.cover,
-                                      )),
-                            const SizedBox(width: 8),
-                            Text("${e['count']} x"),
-                            const SizedBox(width: 8),
-                            Text(e['name']),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.topRight,
-                                    child: Text(
-                                        "${NumberFormat.decimalPattern().format(e['price'])}đ")))
-                          ],
-                        ),
-                      )),
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    style: TextButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                        foregroundColor: const Color(0xff243763)),
+                    child: const Text('Add more'),
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Your bill",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Subtotal"),
-                        Text(
-                          "${NumberFormat.decimalPattern().format(subTotal)}đ",
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Fee"),
-                        Text("${NumberFormat.decimalPattern().format(fee)}đ"),
-                      ],
-                    ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Total",
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16)),
-                        Text(
-                          "${NumberFormat.decimalPattern().format(fee + subTotal)}đ",
-                          style: const TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16),
-                        ),
-                      ],
-                    ),
+              Obx(() => Column(
+                    children: [
+                      ...homeController.cartProducts.map((a) => InkWell(
+                            onTap: () {
+                              homeController.updateTempCartProduct();
+
+                              showModalBottomSheet(
+                                  useSafeArea: true,
+                                  backgroundColor: Colors.transparent,
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (_) => Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(10)),
+                                        ),
+                                        height: context.height * 0.8,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 4),
+                                            Center(
+                                              child: Container(
+                                                height: 4,
+                                                width: 32,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey.shade400,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 24),
+                                            AspectRatio(
+                                              aspectRatio: 1,
+                                              child: CachedNetworkImage(
+                                                  imageBuilder: (_,
+                                                          imageProvider) =>
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          image:
+                                                              DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  // fit: BoxFit.cover,
+                                                  imageUrl: a["imageUrl"],
+                                                  placeholder: (_, url) =>
+                                                      Shimmer.fromColors(
+                                                        baseColor: Colors
+                                                            .grey.shade300,
+                                                        highlightColor: Colors
+                                                            .grey.shade100,
+                                                        child: Container(),
+                                                      ),
+                                                  errorWidget: (_, url,
+                                                          error) =>
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .black45)),
+                                                        child: const Icon(
+                                                            Icons.error,
+                                                            color:
+                                                                Colors.black45,
+                                                            size: 20),
+                                                      )),
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Text(
+                                              a['name'],
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Expanded(
+                                              child: Text(
+                                                "${NumberFormat.decimalPattern().format(a["price"])}đ",
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                            Row(children: [
+                                              Expanded(
+                                                  flex: 2,
+                                                  child: IntrinsicHeight(
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .stretch,
+                                                      children: [
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            border: Border.all(
+                                                                color: const Color(
+                                                                    0xff243763)),
+                                                          ),
+                                                          child: InkWell(
+                                                              onTap: () {
+                                                                homeController
+                                                                    .decrease(
+                                                                        ProductModel
+                                                                            .fromJson(
+                                                                          a,
+                                                                        ),
+                                                                        true);
+                                                              },
+                                                              child: const Icon(
+                                                                Icons.remove,
+                                                                color: Color(
+                                                                    0xff243763),
+                                                                size: 20,
+                                                              )),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      24),
+                                                          child: Obx(() => Text(
+                                                              homeController.tempCartProduct.firstWhereOrNull((element) =>
+                                                                          element[
+                                                                              'id'] ==
+                                                                          a[
+                                                                              'id']) !=
+                                                                      null
+                                                                  ? homeController
+                                                                      .tempCartProduct
+                                                                      .firstWhereOrNull((element) =>
+                                                                          element[
+                                                                              'id'] ==
+                                                                          a[
+                                                                              'id'])[
+                                                                          'count']
+                                                                      .toString()
+                                                                  : "0",
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ))),
+                                                        ),
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                                color: const Color(
+                                                                    0xff243763)),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                          ),
+                                                          child: InkWell(
+                                                              onTap: () {
+                                                                homeController.addToCart(
+                                                                    ProductModel
+                                                                        .fromJson(
+                                                                            a),
+                                                                    true);
+                                                              },
+                                                              child: const Icon(
+                                                                Icons.add,
+                                                                color: Color(
+                                                                    0xff243763),
+                                                                size: 20,
+                                                              )),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                flex: 4,
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xff243763),
+                                                      foregroundColor:
+                                                          Colors.white,
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 16,
+                                                          horizontal: 8),
+                                                    ),
+                                                    onPressed: () {
+                                                      homeController
+                                                          .updateCartProductFromTemp();
+                                                      Get.back();
+                                                    },
+                                                    child: const Text(
+                                                        "Update order")),
+                                              )
+                                            ]),
+                                            const SizedBox(height: 8),
+                                          ],
+                                        ),
+                                      ));
+                            },
+                            child: Column(children: [
+                              const SizedBox(height: 12),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 48,
+                                    child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: (a['imageUrl'] != "" &&
+                                                a['imageUrl'] != 'string' &&
+                                                a['imageUrl'] != null)
+                                            ? CachedNetworkImage(
+                                                imageBuilder: (_,
+                                                        imageProvider) =>
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                imageUrl: a['imageUrl'],
+                                                placeholder: (_, url) =>
+                                                    Shimmer.fromColors(
+                                                      baseColor:
+                                                          Colors.grey.shade300,
+                                                      highlightColor:
+                                                          Colors.grey.shade100,
+                                                      child: Container(),
+                                                    ),
+                                                errorWidget: (_, url, error) =>
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          border: Border.all(
+                                                              color: Colors
+                                                                  .black45)),
+                                                      child: const Icon(
+                                                          Icons.error,
+                                                          color: Colors.black45,
+                                                          size: 20),
+                                                    ))
+                                            : Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    border: Border.all(
+                                                        color: Colors.black45)),
+                                                child: const Icon(Icons.error,
+                                                    color: Colors.black45,
+                                                    size: 20),
+                                              )),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text("${a['count']}x"),
+                                  const SizedBox(width: 8),
+                                  Expanded(child: Text(a['name'])),
+                                  Text(
+                                    "${NumberFormat.decimalPattern().format(a['price'])}đ",
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              const Divider(height: 0)
+                            ]),
+                          ))
+                    ],
+                  )),
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                      // isScrollControlled: true,
+                      useSafeArea: true,
+                      context: context,
+                      builder: (context) => Container());
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Row(children: [
+                    Icon(Icons.list_alt_outlined),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        "Notes",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    )
                   ]),
-            ),
-            const SizedBox(height: 8),
-            Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                color: Colors.white,
-                child: Column(
+                ),
+              ),
+            ]),
+          ),
+
+          Container(
+              height: 8,
+              decoration: BoxDecoration(color: Colors.grey.shade200)),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                const Text(
+                  "Your bill",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(children: [
-                      const Icon(
-                        Icons.assignment_outlined,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        "Add Voucher",
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                      Expanded(
-                          child: Container(
-                              alignment: Alignment.centerRight,
-                              child: const Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey,
-                              )))
-                    ]),
-                    const Divider(),
-                    Row(children: [
-                      const Icon(
-                        Icons.note_outlined,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        "Note",
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                      Expanded(
-                          child: Container(
-                              alignment: Alignment.centerRight,
-                              child: const Icon(
-                                Icons.chevron_right,
-                                color: Colors.grey,
-                              )))
-                    ]),
+                    const Text("Subtotal"),
+                    Text(
+                      "${NumberFormat.decimalPattern().format(subTotal)}đ",
+                    ),
                   ],
-                )),
-          ]),
-        ),
+                ),
+                const Divider(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Delivery fee"),
+                    Text("${NumberFormat.decimalPattern().format(fee)}đ"),
+                  ],
+                ),
+                const Divider(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Discount"),
+                    Text("${NumberFormat.decimalPattern().format(fee)}đ"),
+                  ],
+                ),
+                const Divider(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Total",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16)),
+                    Text(
+                      "${NumberFormat.decimalPattern().format(fee + subTotal)}đ",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 32)
+        ]),
       ),
     );
   }
