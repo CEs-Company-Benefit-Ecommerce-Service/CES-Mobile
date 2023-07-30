@@ -22,7 +22,23 @@ class HomeController extends GetxController {
   var selectedProduct = {};
   var cartProducts = [].obs;
 
-  void addToCart(ProductModel product) {
+  var tempCartProduct = [].obs;
+
+  void updateTempCartProduct() {
+    tempCartProduct.value = [...cartProducts]
+        .whereType<Map<String, dynamic>>()
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList();
+  }
+
+  void updateCartProductFromTemp() {
+    cartProducts.value = [...tempCartProduct]
+        .whereType<Map<String, dynamic>>()
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList();
+  }
+
+  void addToCart(ProductModel product, [bool isTemp = false]) {
     bool productExists = false;
     int productIndex = -1;
     for (int i = 0; i < cartProducts.length; i++) {
@@ -32,19 +48,27 @@ class HomeController extends GetxController {
         break;
       }
     }
-    if (!productExists) {
-      cartProducts.add({
-        ...product.toJson(),
-        "count": 1,
-      });
+
+    if (isTemp) {
+      tempCartProduct[productIndex]['count'] += 1;
+      tempCartProduct.refresh();
     } else {
-      cartProducts[productIndex]['count'] += 1;
+      if (!productExists) {
+        {
+          cartProducts.add({
+            ...product.toJson(),
+            "count": 1,
+          });
+        }
+      } else {
+        cartProducts[productIndex]['count'] += 1;
+      }
     }
 
     cartProducts.refresh();
   }
 
-  void decrease(ProductModel product) {
+  void decrease(ProductModel product, [bool isTemp = false]) {
     bool productExists = false;
     int productIndex = -1;
 
@@ -57,13 +81,24 @@ class HomeController extends GetxController {
     }
 
     if (productExists) {
-      if (cartProducts[productIndex]['count'] > 0) {
-        cartProducts[productIndex]['count'] -= 1;
-        if (cartProducts[productIndex]['count'] == 0) {
-          cartProducts.removeAt(productIndex);
+      if (isTemp) {
+        if (tempCartProduct[productIndex]['count'] > 0) {
+          tempCartProduct[productIndex]['count'] -= 1;
+          if (tempCartProduct[productIndex]['count'] == 0) {
+            tempCartProduct.removeAt(productIndex);
+          }
+          tempCartProduct.refresh();
+        }
+      } else {
+        if (cartProducts[productIndex]['count'] > 0) {
+          cartProducts[productIndex]['count'] -= 1;
+          if (cartProducts[productIndex]['count'] == 0) {
+            cartProducts.removeAt(productIndex);
+          }
         }
       }
     }
+
     cartProducts.refresh();
   }
 
@@ -150,13 +185,3 @@ class HomeController extends GetxController {
     } finally {}
   }
 }
-
-// @override
-// void onReady() {
-//   super.onReady();
-// }
-
-// @override
-// void onClose() {
-//   super.onClose();
-// }
