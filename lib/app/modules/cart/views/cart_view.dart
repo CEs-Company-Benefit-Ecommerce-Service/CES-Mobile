@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ces_app/app/models/product_model.dart';
 import 'package:ces_app/app/modules/home/controllers/home_controller.dart';
@@ -18,7 +16,7 @@ class CartView extends GetView<CartController> {
     final HomeController homeController = Get.find<HomeController>();
     var subTotal = homeController.cartProducts
         .fold(0, (sum, item) => sum + item['price'] * item['count'] as int);
-    var fee = 0;
+    var fee = 5000;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -61,7 +59,41 @@ class CartView extends GetView<CartController> {
                       )),
                   onPressed: controller.isLoading.value
                       ? null
-                      : () => controller.order(homeController.cartProducts),
+                      : () async {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (_) {
+                              controller.startTimer();
+                              return AlertDialog(
+                                title: Obx(() => Text(controller.time.value)),
+                                content: const Text(
+                                    "Are you sure to place an order?"),
+                                actions: [
+                                  TextButton(
+                                      child: Text("Cancel",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade600)),
+                                      onPressed: () {
+                                        Get.back();
+                                        controller.timer?.cancel();
+                                        controller.time.value = '05';
+                                      }),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                        foregroundColor:
+                                            const Color(0xff243763)),
+                                    child: const Text("Order"),
+                                    onPressed: () => controller
+                                        .order(homeController.cartProducts),
+                                  ),
+                                ],
+                              );
+                            },
+                          ).then((value) {
+                            controller.timer?.cancel();
+                          });
+                        },
                   child: controller.isLoading.value
                       ? const SizedBox(
                           width: 24,
@@ -81,7 +113,7 @@ class CartView extends GetView<CartController> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(children: [
-              // const SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -462,11 +494,11 @@ class CartView extends GetView<CartController> {
                   ],
                 ),
                 const Divider(height: 24),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Discount"),
-                    Text("${NumberFormat.decimalPattern().format(fee)}đ"),
+                    Text("Discount"),
+                    Text("0"),
                   ],
                 ),
                 const Divider(height: 24),

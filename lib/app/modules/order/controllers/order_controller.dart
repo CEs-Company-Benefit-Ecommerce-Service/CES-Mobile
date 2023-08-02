@@ -40,10 +40,10 @@ class OrderController extends GetxController
   }
 
   @override
-  void onClose() {
+  void dispose() {
     tabController?.dispose();
     timer?.cancel();
-    super.onClose();
+    super.dispose();
   }
 
   fetchData() async {
@@ -53,7 +53,7 @@ class OrderController extends GetxController
     isLoading(true);
     final futures = <Future>[];
     futures.add(fetchOrderIncoming());
-    futures.add(fetchOrderHistory());
+    // futures.add(fetchOrderHistory());
     await Future.wait(futures);
     isLoading(false);
     isInit = true;
@@ -78,7 +78,9 @@ class OrderController extends GetxController
 
         orderIncomingList = data.map((e) => OrderModel.fromJson(e)).toList();
       } else {
-        fetchData();
+        if (response.statusCode == 500) {
+          fetchOrderIncoming();
+        }
         if (kDebugMode) {
           print('error fetching data order controller + ${response.body}');
         }
@@ -113,7 +115,7 @@ class OrderController extends GetxController
         orderHistoryList.value =
             data.map((e) => OrderModel.fromJson(e)).toList();
       } else {
-        fetchData();
+        fetchOrderHistory();
         if (kDebugMode) {
           print('error fetching data order controller + ${response.body}');
         }

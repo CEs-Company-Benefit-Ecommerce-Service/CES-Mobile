@@ -9,6 +9,8 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
   const OrderDetailsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var fee = 5000;
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.red,
@@ -208,15 +210,16 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                               children: [
                                 const Text("Subtotal"),
                                 Text(
-                                    "${NumberFormat.decimalPattern().format(controller.currentOrderDetails?.total)}đ"),
+                                    "${NumberFormat.decimalPattern().format(controller.currentOrderDetails!.total! - fee)}đ"),
                               ],
                             ),
                             const SizedBox(height: 4),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Fee"),
-                                Text("0đ"),
+                                const Text("Fee"),
+                                Text(
+                                    "${NumberFormat.decimalPattern().format(fee)}đ"),
                               ],
                             ),
                             const SizedBox(height: 4),
@@ -282,24 +285,24 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                             ),
                           ]),
                       const SizedBox(height: 24),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                backgroundColor: const Color(0xff243763),
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 8),
-                              ),
-                              onPressed: () => {},
-                              child: const Text("Re-order")),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                      //   children: [
+                      //     ElevatedButton(
+                      //         style: ElevatedButton.styleFrom(
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(8),
+                      //           ),
+                      //           backgroundColor: const Color(0xff243763),
+                      //           foregroundColor: Colors.white,
+                      //           padding: const EdgeInsets.symmetric(
+                      //               vertical: 16, horizontal: 8),
+                      //         ),
+                      //         onPressed: () => {},
+                      //         child: const Text("Re-order")),
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 8),
                     ],
                   ),
                 ))),

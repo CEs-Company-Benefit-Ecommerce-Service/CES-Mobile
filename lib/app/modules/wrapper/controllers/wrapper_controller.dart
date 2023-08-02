@@ -85,7 +85,12 @@ class WrapperController extends GetxController {
         showBottomBar.value = true;
       }
     });
-    pageController = PageController(initialPage: 0);
+    if (Get.arguments != null) {
+      currentPage.value = 1;
+      pageController = PageController(initialPage: 1);
+    } else {
+      pageController = PageController(initialPage: 0);
+    }
   }
 
   fetchUser() async {
