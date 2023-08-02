@@ -62,7 +62,9 @@ class WalletController extends GetxController {
 
         walletList = data.map((e) => WalletModel.fromJson(e)).toList();
       } else {
-        fetchData();
+        if (response.statusCode == 500) {
+          fetchData();
+        }
         if (kDebugMode) {
           print('error fetching data + ${response.body}');
         }

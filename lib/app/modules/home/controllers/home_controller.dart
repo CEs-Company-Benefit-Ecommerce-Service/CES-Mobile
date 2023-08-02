@@ -150,7 +150,7 @@ class HomeController extends GetxController {
         productList = data.map((e) => ProductModel.fromJson(e)).toList();
       } else {
         if (kDebugMode) {
-          print('error fetching data + ${response.body}');
+          print('error fetching data product + ${response.statusCode}');
         }
       }
     } catch (e) {
