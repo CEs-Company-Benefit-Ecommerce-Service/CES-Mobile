@@ -25,9 +25,8 @@ class AuthenticationController extends GetxController {
         var payload = {
           "email": loginKey.currentState?.value['email'],
           "password": loginKey.currentState?.value['password'],
-          "fcmToken": await box.read("fcmToken")
+          "fcmToken": box.read("fcmToken") ?? ""
         };
-
         http.Response response =
             await http.post(Uri.tryParse('https://api-dev.ces.bio/api/login')!,
                 headers: <String, String>{
@@ -38,7 +37,6 @@ class AuthenticationController extends GetxController {
           var result = jsonDecode(response.body);
           loginModel = LoginModel.fromJson(result['data']);
 
-          // set token
           box.write("accountId", loginModel?.account?.id);
           box.write("token", loginModel?.token?.accessToken);
 
