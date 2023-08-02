@@ -28,20 +28,20 @@ class WalletView extends GetView<WalletController> {
         ],
       ),
       body: Obx(
-        () => controller.isLoading.value && controller.isInit == false
+        () => controller.isLoading.value && !controller.isInit
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 controller: wrapperController.scrollController,
                 child: Column(
                   children: [
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Center(
                       child: Container(
-                        width: 240,
-                        height: 240,
+                        width: 220,
+                        height: 220,
                         decoration: BoxDecoration(
                           border:
-                              Border.all(width: 20, color: Colors.red.shade300),
+                              Border.all(width: 16, color: Colors.red.shade300),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(200),
                           ),
@@ -50,7 +50,7 @@ class WalletView extends GetView<WalletController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(height: 32),
+                            const SizedBox(height: 24),
                             const Text("Current balance"),
                             const SizedBox(height: 8),
                             Text(
@@ -74,7 +74,7 @@ class WalletView extends GetView<WalletController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Container(
                         height: 8,
                         decoration: BoxDecoration(color: Colors.grey.shade300)),
@@ -82,7 +82,7 @@ class WalletView extends GetView<WalletController> {
                       margin: const EdgeInsets.symmetric(horizontal: 12),
                       child: const Column(
                         children: [
-                          SizedBox(height: 8),
+                          SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,12 +91,12 @@ class WalletView extends GetView<WalletController> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16)),
-                              Text(
-                                "View all",
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                              // Text(
+                              //   "View all",
+                              //   style: TextStyle(
+                              //       color: Colors.red,
+                              //       fontWeight: FontWeight.w500),
+                              // ),
                             ],
                           ),
                           SizedBox(height: 8),

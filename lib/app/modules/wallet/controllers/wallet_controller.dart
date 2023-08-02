@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 class WalletController extends GetxController {
   bool isInit = false;
   var isLoading = false.obs;
-  var showBalance = false.obs;
+  var showBalance = true.obs;
   List<WalletTransactionModel>? walletTransactionList;
   List<WalletModel>? walletList;
   String? currentTransactionId;

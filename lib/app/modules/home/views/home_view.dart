@@ -354,152 +354,137 @@ class HomeView extends GetView<HomeController> {
       //         ),
       //       ),
       //     )),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          controller: wrapperController.scrollController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              CarouselSlider(
-                options: CarouselOptions(
-                  aspectRatio: 2.5 / 1,
-                  viewportFraction: 0.9,
-                  initialPage: 0,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enableInfiniteScroll: true,
-                ),
-                items: [
-                  "assets/images/banner1.jpg",
-                  "assets/images/banner2.jpg",
-                  "assets/images/banner3.jpg"
-                ].map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: AssetImage(i),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
+      body: SingleChildScrollView(
+        controller: wrapperController.scrollController,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 16),
+            CarouselSlider(
+              options: CarouselOptions(
+                aspectRatio: 2.5 / 1,
+                viewportFraction: 0.9,
+                initialPage: 0,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
               ),
-              const SizedBox(height: 16),
-              Obx(() => controller.isLoading.value && !controller.isInit
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Category list",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.toNamed(Routes.CATEGORY);
-                                },
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "View all",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: Colors.grey.shade600),
-                                    ),
-                                    Icon(
-                                      Icons.chevron_right,
-                                      color: Colors.grey.shade600,
-                                      size: 24,
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+              items: [
+                "assets/images/banner1.jpg",
+                "assets/images/banner2.jpg",
+                "assets/images/banner3.jpg"
+              ].map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          image: AssetImage(i),
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(height: 16),
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ...(controller.categoryList ?? []).map((cat) {
-                                return Container(
-                                  width: 60,
-                                  // height: 80,
-                                  margin: EdgeInsets.only(
-                                      left: cat.id !=
-                                              controller.categoryList?.first.id
-                                          ? 40
-                                          : 0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      controller.navigateToProduct(cat);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 48,
-                                          width: 48,
-                                          child: (cat.imageUrl != "" &&
-                                                  cat.imageUrl != 'string' &&
-                                                  cat.imageUrl != null)
-                                              ? CachedNetworkImage(
-                                                  imageBuilder:
-                                                      (_, imageProvider) =>
-                                                          Container(
-                                                    decoration: BoxDecoration(
-                                                      // shape: BoxShape.circle,
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.contain,
-                                                      ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 16),
+            Obx(() => controller.isLoading.value && !controller.isInit
+                ? Container()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Category list",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(Routes.CATEGORY);
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "View all",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: Colors.grey.shade600),
+                                  ),
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.grey.shade600,
+                                    size: 24,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...(controller.categoryList ?? []).map((cat) {
+                              return Container(
+                                width: 60,
+                                // height: 80,
+                                margin: EdgeInsets.only(
+                                    left: cat.id !=
+                                            controller.categoryList?.first.id
+                                        ? 40
+                                        : 0),
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.navigateToProduct(cat);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 48,
+                                        width: 48,
+                                        child: (cat.imageUrl != "" &&
+                                                cat.imageUrl != 'string' &&
+                                                cat.imageUrl != null)
+                                            ? CachedNetworkImage(
+                                                imageBuilder:
+                                                    (_, imageProvider) =>
+                                                        Container(
+                                                  decoration: BoxDecoration(
+                                                    // shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.contain,
                                                     ),
                                                   ),
-                                                  imageUrl: cat.imageUrl!,
-                                                  placeholder: (_, url) =>
-                                                      Shimmer.fromColors(
-                                                    baseColor:
-                                                        Colors.grey.shade300,
-                                                    highlightColor:
-                                                        Colors.grey.shade100,
-                                                    child: Container(),
-                                                  ),
-                                                  errorWidget:
-                                                      (_, url, error) =>
-                                                          Container(
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image: DecorationImage(
-                                                        image: AssetImage(
-                                                          "assets/icons/bibimbap.png",
-                                                        ),
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container(
+                                                ),
+                                                imageUrl: cat.imageUrl!,
+                                                placeholder: (_, url) =>
+                                                    Shimmer.fromColors(
+                                                  baseColor:
+                                                      Colors.grey.shade300,
+                                                  highlightColor:
+                                                      Colors.grey.shade100,
+                                                  child: Container(),
+                                                ),
+                                                errorWidget: (_, url, error) =>
+                                                    Container(
                                                   decoration:
                                                       const BoxDecoration(
                                                     shape: BoxShape.circle,
@@ -511,310 +496,318 @@ class HomeView extends GetView<HomeController> {
                                                     ),
                                                   ),
                                                 ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        AutoSizeText(
-                                          cat.name!,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.center,
-                                        )
-                                      ],
-                                    ),
+                                              )
+                                            : Container(
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                    image: AssetImage(
+                                                      "assets/icons/bibimbap.png",
+                                                    ),
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ),
+                                              ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      AutoSizeText(
+                                        cat.name!,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ],
                                   ),
-                                );
-                              }),
-                            ],
-                          ),
+                                ),
+                              );
+                            }),
+                          ],
                         ),
-                      ],
-                    )),
-              const SizedBox(height: 8),
-              Obx(
-                () => (controller.isLoading.value && !controller.isInit)
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Buy now",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16)),
-                              const SizedBox(height: 8),
-                              ...(controller.productList ?? []).map((item) {
-                                var isAddedToCartItem = controller.cartProducts
-                                        .firstWhereOrNull((element) =>
-                                            element['id'] == item.id) !=
-                                    null;
+                      ),
+                    ],
+                  )),
+            const SizedBox(height: 8),
+            Obx(
+              () => (controller.isLoading.value && !controller.isInit)
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Buy now",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16)),
+                            const SizedBox(height: 8),
+                            ...(controller.productList ?? []).map((item) {
+                              var isAddedToCartItem = controller.cartProducts
+                                      .firstWhereOrNull((element) =>
+                                          element['id'] == item.id) !=
+                                  null;
 
-                                return Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      height: 120,
-                                      child: Row(
-                                        children: [
-                                          AspectRatio(
-                                            aspectRatio: 1,
-                                            child: (item.imageUrl != "" &&
-                                                    item.imageUrl != 'string' &&
-                                                    item.imageUrl != null)
-                                                ? CachedNetworkImage(
-                                                    imageBuilder: (_,
-                                                            imageProvider) =>
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
+                              return Column(
+                                children: [
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    height: 120,
+                                    child: Row(
+                                      children: [
+                                        AspectRatio(
+                                          aspectRatio: 1,
+                                          child: (item.imageUrl != "" &&
+                                                  item.imageUrl != 'string' &&
+                                                  item.imageUrl != null)
+                                              ? CachedNetworkImage(
+                                                  imageBuilder: (_,
+                                                          imageProvider) =>
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          image:
+                                                              DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  imageUrl: item.imageUrl!,
+                                                  placeholder: (_, url) =>
+                                                      Shimmer.fromColors(
+                                                        baseColor: Colors
+                                                            .grey.shade300,
+                                                        highlightColor: Colors
+                                                            .grey.shade100,
+                                                        child: Container(),
+                                                      ),
+                                                  errorWidget: (_, url,
+                                                          error) =>
+                                                      Container(
+                                                        decoration: BoxDecoration(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                         8),
-                                                            image:
-                                                                DecorationImage(
-                                                              image:
-                                                                  imageProvider,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                    imageUrl: item.imageUrl!,
-                                                    placeholder: (_, url) =>
-                                                        Shimmer.fromColors(
-                                                          baseColor: Colors
-                                                              .grey.shade300,
-                                                          highlightColor: Colors
-                                                              .grey.shade100,
-                                                          child: Container(),
-                                                        ),
-                                                    errorWidget:
-                                                        (_, url, error) =>
-                                                            Container(
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  border: Border.all(
-                                                                      color: Colors
-                                                                          .black45)),
-                                                              child: const Icon(
-                                                                  Icons.error,
-                                                                  color: Colors
-                                                                      .black45,
-                                                                  size: 20),
-                                                            ))
-                                                : Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .black45)),
-                                                    child: const Icon(
-                                                        Icons.error,
-                                                        color: Colors.black45,
-                                                        size: 20),
-                                                  ),
-                                          ),
-                                          const SizedBox(width: 16),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  item.name!.toCapitalized(),
-                                                  style: const TextStyle(
-                                                    height: 1.6,
-                                                    fontSize: 16,
-                                                    color: Colors.black,
-                                                  ),
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .black45)),
+                                                        child: const Icon(
+                                                            Icons.error,
+                                                            color:
+                                                                Colors.black45,
+                                                            size: 20),
+                                                      ))
+                                              : Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                          color:
+                                                              Colors.black45)),
+                                                  child: const Icon(Icons.error,
+                                                      color: Colors.black45,
+                                                      size: 20),
                                                 ),
-                                                Text(
-                                                  item.category!.name!,
-                                                  style: TextStyle(
-                                                    height: 1.6,
-                                                    fontSize: 14,
-                                                    color: Colors.grey.shade700,
-                                                  ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                item.name!.toCapitalized(),
+                                                style: const TextStyle(
+                                                  height: 1.6,
+                                                  fontSize: 16,
+                                                  color: Colors.black,
                                                 ),
-                                                Expanded(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "${NumberFormat.decimalPattern().format(item.price)} đ",
-                                                        style: const TextStyle(
-                                                            height: 1.6,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
-                                                      ),
-                                                      isAddedToCartItem
-                                                          ? IntrinsicHeight(
-                                                              child: Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .stretch,
-                                                                children: [
-                                                                  Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                      border: Border.all(
-                                                                          color:
-                                                                              const Color(0xff243763)),
-                                                                    ),
-                                                                    child: InkWell(
-                                                                        onTap: () {
-                                                                          controller
-                                                                              .decrease(item);
-                                                                        },
-                                                                        child: const Icon(
-                                                                          Icons
-                                                                              .remove,
-                                                                          color:
-                                                                              Color(0xff243763),
-                                                                          size:
-                                                                              20,
-                                                                        )),
+                                              ),
+                                              Text(
+                                                item.category!.name!,
+                                                style: TextStyle(
+                                                  height: 1.6,
+                                                  fontSize: 14,
+                                                  color: Colors.grey.shade700,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "${NumberFormat.decimalPattern().format(item.price)} đ",
+                                                      style: const TextStyle(
+                                                          height: 1.6,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                    isAddedToCartItem
+                                                        ? IntrinsicHeight(
+                                                            child: Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .stretch,
+                                                              children: [
+                                                                Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                    border: Border.all(
+                                                                        color: const Color(
+                                                                            0xff243763)),
                                                                   ),
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                        horizontal:
-                                                                            16),
-                                                                    child: Text(
-                                                                      controller.cartProducts.firstWhereOrNull((element) => element['id'] == item.id) !=
-                                                                              null
-                                                                          ? controller
-                                                                              .cartProducts
-                                                                              .firstWhereOrNull((element) => element['id'] == item.id)['count']
-                                                                              .toString()
-                                                                          : "0",
-                                                                      style: const TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
-                                                                  ),
-                                                                  Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      border: Border.all(
-                                                                          color:
-                                                                              const Color(0xff243763)),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                    ),
-                                                                    child: InkWell(
-                                                                        onTap: () {
-                                                                          controller
-                                                                              .addToCart(item);
-                                                                        },
-                                                                        child: const Icon(
-                                                                          Icons
-                                                                              .add,
-                                                                          color:
-                                                                              Color(0xff243763),
-                                                                          size:
-                                                                              20,
-                                                                        )),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            )
-                                                          : OutlinedButton(
-                                                              style:
-                                                                  OutlinedButton
-                                                                      .styleFrom(
-                                                                minimumSize:
-                                                                    const Size(
-                                                                        64, 28),
-                                                                // padding: const EdgeInsets
-                                                                //         .symmetric(
-                                                                //     vertical: 8,
-                                                                //     horizontal:
-                                                                //         24),
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20),
+                                                                  child: InkWell(
+                                                                      onTap: () {
+                                                                        controller
+                                                                            .decrease(item);
+                                                                      },
+                                                                      child: const Icon(
+                                                                        Icons
+                                                                            .remove,
+                                                                        color: Color(
+                                                                            0xff243763),
+                                                                        size:
+                                                                            20,
+                                                                      )),
                                                                 ),
-                                                                foregroundColor:
-                                                                    const Color(
-                                                                        0xff243763),
-                                                                side: const BorderSide(
-                                                                    color: Color(
-                                                                        0xff243763)),
+                                                                Container(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          16),
+                                                                  child: Text(
+                                                                    controller.cartProducts.firstWhereOrNull((element) => element['id'] == item.id) !=
+                                                                            null
+                                                                        ? controller
+                                                                            .cartProducts
+                                                                            .firstWhereOrNull((element) =>
+                                                                                element['id'] ==
+                                                                                item.id)['count']
+                                                                            .toString()
+                                                                        : "0",
+                                                                    style: const TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    border: Border.all(
+                                                                        color: const Color(
+                                                                            0xff243763)),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                  ),
+                                                                  child: InkWell(
+                                                                      onTap: () {
+                                                                        controller
+                                                                            .addToCart(item);
+                                                                      },
+                                                                      child: const Icon(
+                                                                        Icons
+                                                                            .add,
+                                                                        color: Color(
+                                                                            0xff243763),
+                                                                        size:
+                                                                            20,
+                                                                      )),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : OutlinedButton(
+                                                            style:
+                                                                OutlinedButton
+                                                                    .styleFrom(
+                                                              minimumSize:
+                                                                  const Size(
+                                                                      64, 28),
+                                                              // padding: const EdgeInsets
+                                                              //         .symmetric(
+                                                              //     vertical: 8,
+                                                              //     horizontal:
+                                                              //         24),
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
                                                               ),
-                                                              onPressed: () {
-                                                                controller
-                                                                    .addToCart(
-                                                                        item);
-                                                              },
-                                                              child: const Text(
-                                                                "Add",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12),
-                                                              ))
-                                                      // : Container(
-                                                      //     padding: EdgeInsets
-                                                      //         .symmetric(
-                                                      //             horizontal:
-                                                      //                 16,
-                                                      //             vertical:
-                                                      //                 4),
-                                                      //     decoration:
-                                                      //         BoxDecoration(
-                                                      //       border: Border.all(
-                                                      //           color: Color(
-                                                      //               0xff243763)),
-                                                      //       borderRadius:
-                                                      //           BorderRadius
-                                                      //               .circular(
-                                                      //                   20),
-                                                      //     ),
-                                                      //     child: const Text(
-                                                      //       "Add",
-                                                      //       style:
-                                                      //           TextStyle(
-                                                      //         color: Color(
-                                                      //             0xff243763),
-                                                      //       ),
-                                                      //     ))
-                                                    ],
-                                                  ),
+                                                              foregroundColor:
+                                                                  const Color(
+                                                                      0xff243763),
+                                                              side: const BorderSide(
+                                                                  color: Color(
+                                                                      0xff243763)),
+                                                            ),
+                                                            onPressed: () {
+                                                              controller
+                                                                  .addToCart(
+                                                                      item);
+                                                            },
+                                                            child: const Text(
+                                                              "Add",
+                                                              style: TextStyle(
+                                                                  fontSize: 12),
+                                                            ))
+                                                    // : Container(
+                                                    //     padding: EdgeInsets
+                                                    //         .symmetric(
+                                                    //             horizontal:
+                                                    //                 16,
+                                                    //             vertical:
+                                                    //                 4),
+                                                    //     decoration:
+                                                    //         BoxDecoration(
+                                                    //       border: Border.all(
+                                                    //           color: Color(
+                                                    //               0xff243763)),
+                                                    //       borderRadius:
+                                                    //           BorderRadius
+                                                    //               .circular(
+                                                    //                   20),
+                                                    //     ),
+                                                    //     child: const Text(
+                                                    //       "Add",
+                                                    //       style:
+                                                    //           TextStyle(
+                                                    //         color: Color(
+                                                    //             0xff243763),
+                                                    //       ),
+                                                    //     ))
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    const Divider()
-                                  ],
-                                );
-                              })
-                            ]),
-                      ),
-              ),
-              const SizedBox(height: 24),
-            ],
-          ),
+                                  ),
+                                  const Divider()
+                                ],
+                              );
+                            })
+                          ]),
+                    ),
+            ),
+            const SizedBox(height: 24),
+          ],
         ),
       ),
     );

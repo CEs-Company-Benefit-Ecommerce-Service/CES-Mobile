@@ -14,6 +14,7 @@ class OrderController extends GetxController
     with GetSingleTickerProviderStateMixin, StateMixin {
   bool isInit = false;
   var isLoading = false.obs;
+  var isLoadingOrderHistory = false.obs;
   var orderHistoryList = <OrderModel>[].obs;
   List<OrderModel> orderIncomingList = [];
   final box = GetStorage();
@@ -93,6 +94,7 @@ class OrderController extends GetxController
   }
 
   fetchOrderHistory() async {
+    isLoadingOrderHistory(true);
     if (kDebugMode) {
       print("fetchOrderHistory");
     }
@@ -124,7 +126,9 @@ class OrderController extends GetxController
       if (kDebugMode) {
         print('Error while getting data is $e');
       }
-    } finally {}
+    } finally {
+      isLoadingOrderHistory(false);
+    }
   }
 
   void navigateToDetails(id) {

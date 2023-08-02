@@ -35,12 +35,13 @@ class NotificationView extends GetView<NotificationController> {
         child: Obx(
           () => controller.isLoading.value && controller.isInit == false
               ? SizedBox(
-                  height: Get.height - 80,
+                  height: Get.height / 2,
                   child: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 )
               : Column(children: [
+                  const SizedBox(height: 4),
                   ...(controller.notificationList ?? []).map((e) => InkWell(
                         onTap: () {
                           controller.handleClickNotification(e);
