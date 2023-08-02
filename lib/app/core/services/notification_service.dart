@@ -22,7 +22,8 @@ class FirebaseApi {
     await _firebaseMessaging.requestPermission();
 
     String fcmToken = await getDeviceFirebaseToken() ?? "";
-    GetStorage().write("fcmToken", fcmToken);
+    final box = GetStorage();
+    box.write("fcmToken", fcmToken);
 
     if (kDebugMode) {
       print("fcmToken: $fcmToken");

@@ -84,7 +84,6 @@ class ManageAccountView extends GetView<ManageAccountController> {
             InkWell(
               onTap: () {
                 GetStorage().write("token", null);
-                GetStorage().write("fcmToken", null);
                 Get.offAllNamed(Routes.AUTHENTICATION);
               },
               child: Column(
