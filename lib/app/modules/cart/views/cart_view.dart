@@ -64,9 +64,9 @@ class CartView extends GetView<CartController> {
                             barrierDismissible: false,
                             context: context,
                             builder: (_) {
-                              controller.startTimer();
+                              // controller.startTimer();
                               return AlertDialog(
-                                title: Obx(() => Text(controller.time.value)),
+                                // title: Obx(() => Text(controller.time.value)),
                                 content: const Text(
                                     "Are you sure to place an order?"),
                                 actions: [
@@ -76,8 +76,8 @@ class CartView extends GetView<CartController> {
                                               color: Colors.grey.shade600)),
                                       onPressed: () {
                                         Get.back();
-                                        controller.timer?.cancel();
-                                        controller.time.value = '05';
+                                        // controller.timer?.cancel();
+                                        // controller.time.value = '05';
                                       }),
                                   TextButton(
                                     style: TextButton.styleFrom(
@@ -91,7 +91,7 @@ class CartView extends GetView<CartController> {
                               );
                             },
                           ).then((value) {
-                            controller.timer?.cancel();
+                            // controller.timer?.cancel();
                           });
                         },
                   child: controller.isLoading.value

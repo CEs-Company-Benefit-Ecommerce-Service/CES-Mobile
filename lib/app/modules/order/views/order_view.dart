@@ -178,7 +178,8 @@ class OrderView extends GetView<OrderController> {
                                                                       ?.first
                                                                       .product
                                                                       ?.supplier
-                                                                      ?.supplierName ??
+                                                                      ?.account
+                                                                      ?.name ??
                                                                   "Supplier Name"),
                                                               const SizedBox(
                                                                   height: 8),
@@ -633,7 +634,8 @@ class OrderView extends GetView<OrderController> {
                                                                         ?.first
                                                                         .product
                                                                         ?.supplier
-                                                                        ?.supplierName ??
+                                                                        ?.account
+                                                                        ?.name ??
                                                                     "Supplier Name"),
                                                                 const SizedBox(
                                                                     height: 8),

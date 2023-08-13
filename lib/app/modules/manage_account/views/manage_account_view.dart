@@ -32,6 +32,7 @@ class ManageAccountView extends GetView<ManageAccountController> {
               },
               child: const Column(
                 children: [
+                  SizedBox(height: 8),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                     child: Row(

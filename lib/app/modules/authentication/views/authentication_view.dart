@@ -11,7 +11,6 @@ class AuthenticationView extends GetView<AuthenticationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff243763),
       body: SafeArea(
         child: Container(
           color: Colors.grey.shade100,
@@ -55,7 +54,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: FormBuilderTextField(
                       name: 'email',
-                      initialValue: "employee11@gmail.com",
+                      initialValue: "empdemo1@gmail.com",
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(),
                         FormBuilderValidators.email(),

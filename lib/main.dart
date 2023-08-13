@@ -20,13 +20,13 @@ void main() async {
   }
 
   runApp(
-//
-      DevicePreview(
-    enabled: true,
-    builder: (context) => const MyApp(),
-  )
-      // const MyApp(),
-      );
+    //
+    //     DevicePreview(
+    //   enabled: true,
+    //   builder: (context) => const MyApp(),
+    // )
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       //
-
       // Theme
     );
   }

@@ -54,6 +54,7 @@ class CartController extends GetxController {
         .toList();
 
     try {
+      Get.back();
       isLoading(true);
       http.Response response =
           await http.post(Uri.tryParse('https://api-dev.ces.bio/api/order')!,
@@ -64,17 +65,19 @@ class CartController extends GetxController {
               body: jsonEncode(orderList));
 
       if (response.statusCode == 200) {
+        Get.back();
         Get.snackbar("Success", "order successfully placed");
         var result = jsonDecode(response.body);
         if (kDebugMode) {
           print("result: + $result");
         }
         homeController.clearCart();
+        orderController.fetchOrderIncoming();
         Get.offAllNamed(Routes.WRAPPER, arguments: {"orderId": result['id']});
       } else {
         Get.back();
-        timer?.cancel();
-        time.value = '05';
+        // timer?.cancel();
+        // time.value = '05';
         Get.snackbar("Error", jsonDecode(response.body)['Message']);
       }
     } catch (e) {
