@@ -12,10 +12,12 @@ class EditPasswordController extends GetxController {
   var showOldPass = true.obs;
   var showNewPass = true.obs;
   var showConfirmPass = true.obs;
+  var isLoading = false.obs;
 
   void changePassword() async {
     if (editPasswordKey.currentState!.saveAndValidate()) {
       try {
+        isLoading(true);
         String token = GetStorage().read("token");
 
         var payload = {
@@ -32,14 +34,17 @@ class EditPasswordController extends GetxController {
             body: jsonEncode(payload));
 
         if (response.statusCode == 200) {
-          // Get.back();
+          Get.back();
+          Get.snackbar("Success", "Change password successfully");
+        } else {
+          Get.snackbar("Error", "Old password not correct");
         }
       } catch (e) {
         if (kDebugMode) {
           print('Error while update password data is $e');
         }
       } finally {
-        // isLoading(false);
+        isLoading(false);
       }
     }
   }

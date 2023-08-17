@@ -143,7 +143,7 @@ class WalletView extends GetView<WalletController> {
                                           ],
                                         ),
                                         Text(
-                                            "${e.type == 1 ? "+" : "-"}${NumberFormat.decimalPattern().format(e.total)}đ",
+                                            "${(e.type == 1 || e.type == 7) ? "+" : "-"}${NumberFormat.decimalPattern().format(e.total)}đ",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500)),
                                       ],

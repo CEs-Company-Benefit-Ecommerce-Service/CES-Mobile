@@ -20,20 +20,22 @@ class EditPasswordView extends GetView<EditPasswordController> {
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  controller.changePassword();
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                  backgroundColor: Colors.red,
-                ),
-                child: const Text("Save"),
-              ),
-            )
+            Obx(() => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () {
+                            controller.changePassword();
+                          },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      backgroundColor: Colors.red,
+                    ),
+                    child: const Text("Save"),
+                  ),
+                ))
           ],
         ),
         body: SingleChildScrollView(

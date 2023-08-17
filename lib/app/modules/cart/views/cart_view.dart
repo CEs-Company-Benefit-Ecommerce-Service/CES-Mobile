@@ -71,7 +71,7 @@ class CartView extends GetView<CartController> {
                                     "Are you sure to place an order?"),
                                 actions: [
                                   TextButton(
-                                      child: Text("Cancel",
+                                      child: Text("No",
                                           style: TextStyle(
                                               color: Colors.grey.shade600)),
                                       onPressed: () {
@@ -83,7 +83,7 @@ class CartView extends GetView<CartController> {
                                     style: TextButton.styleFrom(
                                         foregroundColor:
                                             const Color(0xff243763)),
-                                    child: const Text("Order"),
+                                    child: const Text("Yes"),
                                     onPressed: () => controller
                                         .order(homeController.cartProducts),
                                   ),
