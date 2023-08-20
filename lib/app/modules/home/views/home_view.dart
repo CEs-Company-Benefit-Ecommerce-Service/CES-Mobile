@@ -202,10 +202,29 @@ class HomeView extends GetView<HomeController> {
                                                                                 Row(
                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
-                                                                                Text(
-                                                                                  "${NumberFormat.decimalPattern().format(item["price"])} đ",
-                                                                                  style: const TextStyle(height: 1.6, fontWeight: FontWeight.w700),
+                                                                                Row(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                  children: [
+                                                                                    if (item["preDiscount"] != null)
+                                                                                      Text(
+                                                                                        "${NumberFormat.decimalPattern().format(item["preDiscount"])}đ",
+                                                                                        style: const TextStyle(
+                                                                                          decoration: TextDecoration.lineThrough,
+                                                                                          height: 1.6,
+                                                                                          fontSize: 12,
+                                                                                        ),
+                                                                                      ),
+                                                                                    const SizedBox(width: 4),
+                                                                                    Text(
+                                                                                      "${NumberFormat.decimalPattern().format(item["price"])}đ",
+                                                                                      style: const TextStyle(height: 1.6, fontWeight: FontWeight.w700),
+                                                                                    ),
+                                                                                  ],
                                                                                 ),
+                                                                                // Text(
+                                                                                //   "${NumberFormat.decimalPattern().format(item["price"])} đ",
+                                                                                //   style: const TextStyle(height: 1.6, fontWeight: FontWeight.w700),
+                                                                                // ),
                                                                                 IntrinsicHeight(
                                                                                   child: Row(
                                                                                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -644,12 +663,35 @@ class HomeView extends GetView<HomeController> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      "${NumberFormat.decimalPattern().format(item.price)} đ",
-                                                      style: const TextStyle(
-                                                          height: 1.6,
-                                                          fontWeight:
-                                                              FontWeight.w700),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        if (item.preDiscount !=
+                                                            null)
+                                                          Text(
+                                                            "${NumberFormat.decimalPattern().format(item.preDiscount)}đ",
+                                                            style:
+                                                                const TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough,
+                                                              height: 1.6,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        const SizedBox(
+                                                            width: 4),
+                                                        Text(
+                                                          "${NumberFormat.decimalPattern().format(item.price)}đ",
+                                                          style: const TextStyle(
+                                                              height: 1.6,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700),
+                                                        ),
+                                                      ],
                                                     ),
                                                     isAddedToCartItem
                                                         ? IntrinsicHeight(
