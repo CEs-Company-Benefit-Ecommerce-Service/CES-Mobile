@@ -68,8 +68,8 @@ class NotificationView extends GetView<NotificationController> {
                                               border: e.orderId != null
                                                   ? null
                                                   : Border.all(
-                                                      color: Colors.red)
-                                              // color: Colors.red,
+                                                      color: Color(0xfff05150))
+                                              // color: Color(0xfff05150),
                                               ),
                                           child: AspectRatio(
                                             aspectRatio: 1,
@@ -99,7 +99,7 @@ class NotificationView extends GetView<NotificationController> {
                                                   )
                                                 : const Icon(
                                                     Icons.attach_money_outlined,
-                                                    color: Colors.red,
+                                                    color: Color(0xfff05150),
                                                     size: 30,
                                                   ),
                                           ),

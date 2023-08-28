@@ -42,6 +42,7 @@ class AuthenticationController extends GetxController {
 
           Get.offAllNamed('/wrapper');
         } else {
+          Get.snackbar("Error", "Email or Password is not correct");
           if (kDebugMode) {
             print(
               'login api + ${response.body}',

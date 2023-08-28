@@ -56,7 +56,7 @@ class HomeView extends GetView<HomeController> {
               },
               child: const CircleAvatar(
                 radius: 18,
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xfff05150),
                 foregroundColor: Colors.white,
                 child: Icon(Icons.person),
               ),
@@ -103,7 +103,8 @@ class HomeView extends GetView<HomeController> {
                                             children: [
                                               TextButton(
                                                   style: TextButton.styleFrom(
-                                                    foregroundColor: Colors.red,
+                                                    foregroundColor:
+                                                        Color(0xfff05150),
                                                     padding: const EdgeInsets
                                                             .symmetric(
                                                         vertical: 16,

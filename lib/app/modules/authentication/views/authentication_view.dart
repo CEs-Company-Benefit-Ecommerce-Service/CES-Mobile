@@ -24,12 +24,15 @@ class AuthenticationView extends GetView<AuthenticationController> {
                 children: [
                   Container(
                     height: Get.height / 3,
-                    color: const Color(0xff243763),
+                    color: const Color(0xfff05150),
+                    // color: const Color(0xff243763),
                     alignment: Alignment.center,
                     child: Center(
                       child: Image.asset(
-                        'assets/images/logo-no-bg.png',
-                        // width: 240,
+                        // 'assets/images/logo-no-bg.png',
+                        'assets/images/logo_web2_full.png',
+                        width: 240,
+                        color: Colors.white,
                         // height: 160,
                       ),
                     ),
@@ -109,7 +112,8 @@ class AuthenticationView extends GetView<AuthenticationController> {
                               ? null
                               : () => controller.login(),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff243763),
+                            // backgroundColor: const Color(0xff243763),
+                            backgroundColor: const Color(0xfff05150),
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),

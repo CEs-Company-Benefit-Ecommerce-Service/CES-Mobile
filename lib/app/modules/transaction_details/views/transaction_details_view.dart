@@ -14,7 +14,7 @@ class TransactionDetailsView extends GetView<TransactionDetailsController> {
 
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.red,
+        foregroundColor: Color(0xfff05150),
         backgroundColor: Colors.white,
         elevation: 0.5,
         centerTitle: true,
@@ -51,7 +51,7 @@ class TransactionDetailsView extends GetView<TransactionDetailsController> {
                                 child: Icon(
                                   Icons.money,
                                   size: 40,
-                                  color: Colors.red,
+                                  color: Color(0xfff05150),
                                 ),
                               ),
                             ),

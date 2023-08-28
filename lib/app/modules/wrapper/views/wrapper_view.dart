@@ -98,15 +98,17 @@ class WrapperView extends GetView<WrapperController> {
               showBadge: badge != null && badge,
               child: Icon(
                 controller.currentPage == page ? activeIcon : icon,
-                color:
-                    controller.currentPage == page ? Colors.red : Colors.grey,
+                color: controller.currentPage == page
+                    ? Color(0xfff05150)
+                    : Colors.grey,
               ),
             ),
             Text(
               label,
               style: TextStyle(
-                  color:
-                      controller.currentPage == page ? Colors.red : Colors.grey,
+                  color: controller.currentPage == page
+                      ? Color(0xfff05150)
+                      : Colors.grey,
                   fontSize: 13,
                   fontWeight:
                       controller.currentPage == page ? FontWeight.w600 : null),

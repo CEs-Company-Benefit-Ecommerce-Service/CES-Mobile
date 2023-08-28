@@ -17,7 +17,7 @@ class ProductView extends GetView<ProductController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.red,
+        foregroundColor: Color(0xfff05150),
         elevation: 0.5,
         centerTitle: true,
         title: Text(
@@ -167,7 +167,8 @@ class ProductView extends GetView<ProductController> {
                                       children: [
                                         TextButton(
                                             style: TextButton.styleFrom(
-                                              foregroundColor: Colors.red,
+                                              foregroundColor:
+                                                  Color(0xfff05150),
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       vertical: 16,

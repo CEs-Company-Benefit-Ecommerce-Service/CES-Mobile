@@ -15,7 +15,7 @@ class EditProfileView extends GetView<EditProfileController> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.red,
+          foregroundColor: Color(0xfff05150),
           elevation: 0.5,
           title: const Text(
             'Edit Info',
@@ -31,7 +31,7 @@ class EditProfileView extends GetView<EditProfileController> {
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
-                  backgroundColor: Colors.red,
+                  backgroundColor: Color(0xfff05150),
                 ),
                 child: const Text("Save"),
               ),
@@ -58,7 +58,7 @@ class EditProfileView extends GetView<EditProfileController> {
                           SizedBox(height: 8),
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.red,
+                            backgroundColor: Color(0xfff05150),
                             foregroundColor: Colors.white,
                             child: Icon(Icons.person),
                           ),

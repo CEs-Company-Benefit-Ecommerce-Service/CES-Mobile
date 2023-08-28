@@ -20,7 +20,7 @@ class CartView extends GetView<CartController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.red,
+        foregroundColor: Color(0xfff05150),
         elevation: 0.5,
         centerTitle: true,
         title: const Text('Your order',

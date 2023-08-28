@@ -16,7 +16,7 @@ class OrderView extends GetView<OrderController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.red,
+        foregroundColor: Color(0xfff05150),
         elevation: 0.5,
         title: const Text(
           'Order',
@@ -38,7 +38,7 @@ class OrderView extends GetView<OrderController> {
                 }
               },
               indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: Colors.red,
+              indicatorColor: Color(0xfff05150),
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,
               isScrollable: true,
@@ -245,7 +245,7 @@ class OrderView extends GetView<OrderController> {
                                                         .value ==
                                                     0
                                                 ? Colors.grey.shade300
-                                                : Colors.red,
+                                                : Color(0xfff05150),
                                             borderRadius:
                                                 BorderRadius.circular(20)),
                                         child: InkWell(
@@ -334,7 +334,7 @@ class OrderView extends GetView<OrderController> {
                                                                           Icons
                                                                               .check,
                                                                           color: controller.currentFilterOrderStatus == e
-                                                                              ? Colors.red
+                                                                              ? Color(0xfff05150)
                                                                               : Colors.transparent),
                                                                     ),
                                                                   ]),
@@ -386,7 +386,7 @@ class OrderView extends GetView<OrderController> {
                                                         .value ==
                                                     0
                                                 ? Colors.grey.shade300
-                                                : Colors.red,
+                                                : Color(0xfff05150),
                                             borderRadius:
                                                 BorderRadius.circular(20)),
                                         child: InkWell(
@@ -467,7 +467,7 @@ class OrderView extends GetView<OrderController> {
                                                                             padding:
                                                                                 const EdgeInsets.all(8.0),
                                                                             child:
-                                                                                Icon(Icons.check, color: controller.currentFilterDateRange == e ? Colors.red : Colors.transparent),
+                                                                                Icon(Icons.check, color: controller.currentFilterDateRange == e ? Color(0xfff05150) : Colors.transparent),
                                                                           ),
                                                                         ]),
                                                                   ),

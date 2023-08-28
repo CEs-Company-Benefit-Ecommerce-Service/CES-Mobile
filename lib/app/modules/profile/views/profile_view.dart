@@ -17,7 +17,7 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.red,
+        foregroundColor: Color(0xfff05150),
         elevation: 0.5,
         title: const Text(
           'Profile Info',
@@ -48,7 +48,7 @@ class ProfileView extends GetView<ProfileController> {
                             )
                           : const CircleAvatar(
                               radius: 30,
-                              backgroundColor: Colors.red,
+                              backgroundColor: Color(0xfff05150),
                               foregroundColor: Colors.white,
                               child: Icon(Icons.person),
                             ),

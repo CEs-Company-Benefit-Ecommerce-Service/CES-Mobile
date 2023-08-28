@@ -94,7 +94,7 @@ class WalletView extends GetView<WalletController> {
                               // Text(
                               //   "View all",
                               //   style: TextStyle(
-                              //       color: Colors.red,
+                              //       color: Color(0xfff05150),
                               //       fontWeight: FontWeight.w500),
                               // ),
                             ],

@@ -12,7 +12,7 @@ class ManageAccountView extends GetView<ManageAccountController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.red,
+        foregroundColor: Color(0xfff05150),
         elevation: 0.5,
         title: const Text(
           'Manage Account',
@@ -41,7 +41,7 @@ class ManageAccountView extends GetView<ManageAccountController> {
                         Row(children: [
                           Icon(
                             Icons.person_outline,
-                            color: Colors.red,
+                            color: Color(0xfff05150),
                           ),
                           SizedBox(width: 8),
                           Text("Profile info"),

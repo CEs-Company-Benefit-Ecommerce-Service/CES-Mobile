@@ -13,7 +13,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.red,
+          foregroundColor: Color(0xfff05150),
           elevation: 0.5,
           title: const Text(
             'Edit Info',
@@ -31,7 +31,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
-                      backgroundColor: Colors.red,
+                      backgroundColor: Color(0xfff05150),
                     ),
                     child: const Text("Save"),
                   ),

@@ -66,7 +66,7 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         Get.back();
-        Get.snackbar("Success", "order successfully placed");
+        Get.snackbar("Success", "Order successfully placed");
         var result = jsonDecode(response.body);
         if (kDebugMode) {
           print("result: + $result");
@@ -76,9 +76,7 @@ class CartController extends GetxController {
         Get.offAllNamed(Routes.WRAPPER, arguments: {"orderId": result['id']});
       } else {
         Get.back();
-        // timer?.cancel();
-        // time.value = '05';
-        Get.snackbar("Error", jsonDecode(response.body)['Message']);
+        Get.snackbar("Error", "Your balance is not enough to order");
       }
     } catch (e) {
       if (kDebugMode) {

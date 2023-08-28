@@ -15,7 +15,7 @@
 //         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
 //         decoration: BoxDecoration(
 //           borderRadius: BorderRadius.circular(25.0),
-//           color: Colors.red.shade100,
+//           color: Color(0xfff05150).shade100,
 //         ),
 //         child: Text(
 //           message,
